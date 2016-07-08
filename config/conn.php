@@ -6,7 +6,7 @@
 // $password = "BdKwy036";
 
 $host     = "localhost";
-$dbname   = "bd_roboticajr";
+$dbname   = "bd_sisqrcode";
 $usuario  = "root";
 $password = "graomestre10";
 

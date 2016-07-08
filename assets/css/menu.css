@@ -1,0 +1,50 @@
+/* MENU */
+
+.navbar{
+    background-color: #01579b;
+    color: white;
+    border-radius: 0;
+    border: 1px #01579b solid;
+}
+
+.navbar-brand > img{
+    height: 50px;
+    width: 60px;
+    margin-top: -4px;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: white;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+/* FIM MENU */
+
+/* CLIENTE */
+
+/* CADASTRO */
+
+.cliente.cadastro{
+    padding: 0 5%;
+}
+
+.cliente.cadastro > .panel{
+    border-radius: 0;
+}
+
+
+.cliente.cadastro > .panel > .panel-heading{
+    background-color: #01579b;
+    border-radius: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: 1px #01579b solid;
+    color: #fff;
+}
+
+.cliente.cadastro > .panel > .panel-body{
+    border-radius: 0;
+}
+
+
