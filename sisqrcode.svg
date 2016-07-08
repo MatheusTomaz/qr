@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="108cm" height="62cm" viewBox="-662 -4 2153 1236" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #cccccc" x="-660.462" y="-2.71157" width="2150.48" height="1233.66"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-660.462" y="-2.71157" width="2150.48" height="1233.66"/>
+    <text font-size="22.5774" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="414.777" y="621.006">
+      <tspan x="414.777" y="621.006"></tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #eeeeee" x="-241.193" y="152.77" width="1490" height="977.022"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-241.193" y="152.77" width="1490" height="977.022"/>
+    <text font-size="22.5774" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="503.806" y="648.17">
+      <tspan x="503.806" y="648.17"></tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="193.952" y="923.746" width="256" height="136"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="193.952" y="923.746" width="256" height="136"/>
+    <text font-size="22.5774" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="321.952" y="998.635">
+      <tspan x="321.952" y="998.635">Cadastro de Palestra</tspan>
+    </text>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="503.806" y="641.281">
+    <tspan x="503.806" y="641.281"></tspan>
+  </text>
+  <g>
+    <rect style="fill: #cccccc" x="-655.835" y="-0.916104" width="200.487" height="84.5682"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #cccccc" x="-655.835" y="-0.916104" width="200.487" height="84.5682"/>
+    <text font-size="22.5774" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-555.592" y="48.2569">
+      <tspan x="-555.592" y="48.2569">Administrador</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #eeeeee" x="-240.183" y="158.759" width="107.8" height="50.2222"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #eeeeee" x="-240.183" y="158.759" width="107.8" height="50.2222"/>
+    <text font-size="22.5774" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-186.283" y="190.759">
+      <tspan x="-186.283" y="190.759">Usuario</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="-628.565" y="278.548" width="267.7" height="136"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-628.565" y="278.548" width="267.7" height="136"/>
+    <text font-size="22.5774" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-494.715" y="353.437">
+      <tspan x="-494.715" y="353.437">Cadastro de Cliente</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="370.177" y="279.53" width="256" height="136"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="370.177" y="279.53" width="256" height="136"/>
+    <text font-size="22.5774" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="498.177" y="354.419">
+      <tspan x="498.177" y="354.419">Login</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="-136.641" y="921.153" width="256" height="136"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-136.641" y="921.153" width="256" height="136"/>
+    <text font-size="22.5774" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-8.64143" y="996.042">
+      <tspan x="-8.64143" y="996.042">Cadastro de Evento</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="530.17" y="919.677" width="300.4" height="136"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="530.17" y="919.677" width="300.4" height="136"/>
+    <text font-size="22.5774" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="680.37" y="994.566">
+      <tspan x="680.37" y="994.566">Cadastro de Participante</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="880.791" y="917.015" width="256" height="136"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="880.791" y="917.015" width="256" height="136"/>
+    <text font-size="22.5774" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1008.79" y="991.904">
+      <tspan x="1008.79" y="991.904">Relatorios</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="373.401" y="545.917" width="256" height="136"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="373.401" y="545.917" width="256" height="136"/>
+    <text font-size="22.5774" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="501.401" y="620.806">
+      <tspan x="501.401" y="620.806">Menu</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="499.012" y1="416.501" x2="500.215" y2="515.949"/>
+    <polygon style="fill: #000000" points="486.216,516.118 500.554,543.947 514.214,515.779 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="486.216,516.118 500.554,543.947 514.214,515.779 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="501.401,682.926 501.401,801.535 -8.64143,801.535 -8.64143,909.144 "/>
+    <polygon style="fill: #000000" points="-13.6414,909.144 -8.64143,919.144 -3.64143,909.144 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-13.6414,909.144 -8.64143,919.144 -3.64143,909.144 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="501.401,682.845 501.401,800.395 321.952,800.395 321.952,911.769 "/>
+    <polygon style="fill: #000000" points="316.952,911.769 321.952,921.769 326.952,911.769 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="316.952,911.769 321.952,921.769 326.952,911.769 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="501.401,682.926 501.401,800.797 680.37,800.797 680.37,907.669 "/>
+    <polygon style="fill: #000000" points="675.37,907.669 680.37,917.669 685.37,907.669 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="675.37,907.669 680.37,917.669 685.37,907.669 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1008.79,916.03 1008.79,800.395 501.401,800.395 501.401,693.845 "/>
+    <polygon style="fill: #000000" points="506.401,693.845 501.401,683.845 496.401,693.845 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="506.401,693.845 501.401,683.845 496.401,693.845 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-359.862" y1="346.682" x2="338.179" y2="347.372"/>
+    <polygon style="fill: #000000" points="338.165,362.372 368.179,347.401 338.194,332.372 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="338.165,362.372 368.179,347.401 338.194,332.372 "/>
+  </g>
+</svg>
