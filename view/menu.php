@@ -1,15 +1,16 @@
 <?
-    require_once '../config/config.php';
+    require_once '../../config/config.php';
     $config = new Config();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
+    <?=$config->getAssets("favicon","favicon.png");?>
     <title>Robótica Jr.</title>
-    <?=$config->getCss("bootstrap.min.css");?>
-    <?=$config->getCss("font-awesome.min.css");?>
-    <?=$config->getCss("menu.css");?>
+    <?=$config->getAssets("css","bootstrap.min.css");?>
+    <?=$config->getAssets("css","font-awesome.min.css");?>
+    <?=$config->getAssets("css","menu.css");?>
 </head>
 <body>
     <section class="menu">
@@ -17,7 +18,7 @@
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">
-                        <img alt="Brand" src="<?=$config->getLogoRobotica();?>">
+                        <?=$config->getAssets("img","brand.png");?>
                     </a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -66,7 +67,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="#">Configurações da conta</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#">Sair</a></li>
+                                <li><a href="/sisqrcode/view/login.php?sair=1">Sair</a></li>
                             </ul>
                         </li>
                     </ul>

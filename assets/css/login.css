@@ -1,0 +1,39 @@
+/* LOGIN */
+
+html, body{
+    background-color: #01579b;
+    height: 100%;
+}
+
+body{
+    width:100%;
+    height: 100%;
+}
+
+.form-control{
+    border-radius:0;
+}
+
+button{
+    border-radius:0 !important;
+    width: 100%;
+    background-color: #01579b !important;
+    color: white !important;
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+
+.panel{
+    height: 100%;
+    border-radius: 0;
+}
+
+.logo img{
+    margin: 5% 0;
+    width: 100px;
+}
+
+/* FIM LOGIN */

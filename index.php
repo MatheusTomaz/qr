@@ -1,16 +1,9 @@
-<?
-    echo "EM CONSTRUÇÃO";
-?>
-<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>DASHBOARD</title>
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
-    <link href="assets/css/index.css" rel="stylesheet">
-</head>
-<body>
-
-</body>
+    <head>
+        <title>SeuTitulo</title>
+    </head>
+    <frameset rows="100%,*" framespacing="0" frameborder="no" border="0">
+        <frame SRC="view/login.php" NAME="main" frameborder="0" border="no" marginwidth="0" marginheight="0" scrolling="yes">
+    </frameset>
+    <noframes></noframes>
 </html>

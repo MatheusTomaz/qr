@@ -1,8 +1,8 @@
 <?php
 
 require_once 'conn.php';
-require_once 'usuarioBean.php';
-require_once 'usuarioDAO.php';
+// require_once 'usuarioBean.php';
+// require_once 'usuarioDAO.php';
 require_once 'config.php';
 
 class loginController {
@@ -12,19 +12,23 @@ class loginController {
 	private $usuarioDAO, $usuario, $config;
 
 	function loginController() {
-        $this->config = new Config();
-		$this->usuarioDAO = new usuarioDAO();
-		$this->usuario    = new usuario();
+  //       $this->config = new Config();
+		// $this->usuarioDAO = new usuarioDAO();
+		// $this->usuario    = new usuario();
 		if ($_GET["sair"]==1) {
 			session_destroy();
-			header("Location: ".$this->config->getHome());
+			header("Location: /sisqrcode/view/login.php");
 		}
-		if (isset($_POST['submit'])) {
-			$this->usuario->setLogin($_POST['login']);
-			$this->usuario->setSenha($_POST['senha']);
-			$this->fazerLogin();
-		}
-        $this->verificarLogin();
+		// if (isset($_POST['submit'])) {
+		// 	$this->usuario->setLogin($_POST['login']);
+		// 	$this->usuario->setSenha($_POST['senha']);
+		// 	$this->fazerLogin();
+		// }
+  //       $this->verificarLogin();
+        $config = new Config();
+        if($_POST['login']=="root"){
+            header("Location: cliente/cadastroCliente.php");
+        }
 	}
 
 	function fazerLogin() {
