@@ -3,7 +3,9 @@
                 <?=$config->getAssets("img","logo_cinza.png");?>
             </div>
         </section>
+
         <?=$config->getAssets("js","jquery-2.1.1.min.js");?>
         <?=$config->getAssets("js","bootstrap.min.js");?>
+        <?=$config->getAssets("js","sisqrcode.js");?>
     </body>
 </html>

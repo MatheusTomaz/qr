@@ -17,48 +17,13 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">
+                    <a class="navbar-brand" href="../dashboard/dashboard.php">
                         <?=$config->getAssets("img","brand.png");?>
                     </a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                Eventos <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Cadastrar Evento</a></li>
-                                <li><a href="#">Listar Eventos</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                Palestras<span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Cadastrar Palestra</a></li>
-                                <li><a href="#">Listar Palestras</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                Pessoas <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Cadastrar Pessoa</a></li>
-                                <li><a href="#">Listar Pessoas</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                Participante <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Cadastrar Participantes</a></li>
-                                <li><a href="#">Listar Participante</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="<?=$_SESSION["pathDashboard"];?>">Home</a></li>
                         <li><a href="#">Relatórios</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

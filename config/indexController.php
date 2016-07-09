@@ -1,6 +1,6 @@
 <?php
 
-require_once 'conn.php';
+// require_once 'conn.php';
 // require_once 'usuarioBean.php';
 // require_once 'usuarioDAO.php';
 require_once 'config.php';
@@ -27,7 +27,7 @@ class loginController {
   //       $this->verificarLogin();
         $config = new Config();
         if($_POST['login']=="root"){
-            header("Location: cliente/cadastroCliente.php");
+            header("Location: dashboard/dashboard.php");
         }
 	}
 

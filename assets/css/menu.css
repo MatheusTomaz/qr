@@ -38,8 +38,6 @@ button{
     padding-bottom: 25px;
 }
 
-
-
 /* FIM MENU */
 
 /* CONTEUDO */
@@ -52,20 +50,18 @@ button{
 
 /* FIM CONTEUDO */
 
-/* CLIENTE */
-
 /* CADASTRO */
 
-.cliente.cadastro{
+.cadastro{
     padding: 0 5%;
 }
 
-.cliente.cadastro .panel{
+.cadastro .panel{
     border-radius: 0;
 }
 
 
-.cliente.cadastro .panel > .panel-heading{
+.cadastro .panel > .panel-heading{
     background-color: #01579b;
     border-radius: 0;
     padding-top: 20px;
@@ -75,11 +71,11 @@ button{
     font-weight: bold;
 }
 
-.cliente.cadastro .panel > .panel-body{
+.cadastro .panel > .panel-body{
     border-radius: 0;
 }
 
-.cliente.cadastro button[type="submit"]{
+.cadastro button[type="submit"]{
     width: 100%;
     background-color: #01579b;
     color: white;
@@ -89,11 +85,22 @@ button{
     font-weight: bold;
 }
 
+.cadastro select{
+    height: 34px;
+    width: 100%;
+}
+
 /* FIM CADASTRO */
 
-/* FIM CLIENTE */
-
 /* RODAPE */
+
+/* DASHBOARD */
+
+.dashboard .panel-heading .pull-right a{
+    color: #fff;
+}
+
+/* FIM DASHBOARD */
 
 .rodape{
     position:relative;

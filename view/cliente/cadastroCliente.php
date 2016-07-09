@@ -21,13 +21,13 @@
                             <div class="col-xs-12 col-md-8">
                                 <div class="form-group">
                                     <label for="nomeCliente">Nome</label>
-                                    <input type="text" class="form-control" id="nomeCliente" placeholder="Nome do Cliente">
+                                    <input type="text" class="form-control" name="nomeCliente" id="nomeCliente" placeholder="Nome do Cliente">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-4">
                                 <div class="form-group">
                                     <label for="cnpjCliente">CNPJ</label>
-                                    <input type="text" class="form-control" id="cnpjCliente" placeholder="CNPJ">
+                                    <input type="text" class="form-control" name="cnpjCliente" id="cnpjCliente" placeholder="CNPJ">
                                 </div>
                             </div>
                         </div>
@@ -35,19 +35,19 @@
                             <div class="col-xs-12 col-md-4">
                                 <div class="form-group">
                                     <label for="paisCliente">País</label>
-                                    <input type="text" class="form-control" id="paisCliente" placeholder="País">
+                                    <input type="text" class="form-control" name="paisCliente" id="paisCliente" placeholder="País">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-2">
                                 <div class="form-group">
                                     <label for="cidadeCliente">Estado</label>
-                                    <input type="text" class="form-control" id="estadoCliente" placeholder="Estado">
+                                    <input type="text" class="form-control" name="estadoCliente" id="estadoCliente" placeholder="Estado">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-6">
                                 <div class="form-group">
                                     <label for="cidadeCliente">Cidade</label>
-                                    <input type="text" class="form-control" id="cidadeCliente" placeholder="Cidade">
+                                    <input type="text" class="form-control" name="cidadeCliente" id="cidadeCliente" placeholder="Cidade">
                                 </div>
                             </div>
                         </div>
@@ -55,19 +55,19 @@
                             <div class="col-xs-12 col-md-5">
                                 <div class="form-group">
                                     <label for="bairroCliente">Bairro</label>
-                                    <input type="text" class="form-control" id="bairroCliente" placeholder="Bairro">
+                                    <input type="text" class="form-control" id="bairroCliente" id="bairroCliente" placeholder="Bairro">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-5">
                                 <div class="form-group">
                                     <label for="ruaCliente">Rua</label>
-                                    <input type="text" class="form-control" id="ruaCliente" placeholder="Rua">
+                                    <input type="text" class="form-control" nome="ruaCliente" id="ruaCliente" placeholder="Rua">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-2">
                                 <div class="form-group">
                                     <label for="numEndCliente">Nº</label>
-                                    <input type="text" class="form-control" id="numEndCliente" placeholder="Número">
+                                    <input type="text" class="form-control" name="numEndCliente"  id="numEndCliente" placeholder="Número">
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <button type="submit" class="btn btn-default">Enviar</button>
+                                <button type="submit" class="btn btn-default">Cadastrar</button>
                             </div>
                         </div>
                     </form>

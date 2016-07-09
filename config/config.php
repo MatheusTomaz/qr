@@ -6,6 +6,7 @@
         // private $nome = "EREP";
         // private $path = "../../";
         private $pathConfig = "config/config.php";
+        private $pathDashboard = "view/dashboard/dashboard.php";
         private $menu = "../menu.php";
         private $menuRodape = "../menu_rodape.php";
 
@@ -17,17 +18,19 @@
                 $this->path = "../../";
             }
             $_SESSION["config"]=$this->path.$this->pathConfig;
+            $_SESSION["pathDashboard"]=$this->path.$this->pathDashboard;
             $this->getPath("cliente");
             $this->getPath("evento");
             $this->getPath("palestra");
             $this->getPath("participante");
             $this->getPath("pessoas");
             $this->getPath("relatorios");
-
+            $this->getPath("dashboard");
         }
 
         function getPath($param){
             $path = $this->path;
+            $_SESSION["$param"]["view"]["cadastro"]= $path."view/".$param."/cadastro".ucfirst($param).".php";
             $_SESSION["$param"]["controller"]= $path."controller/".$param."/".$param."Controller.php";
             $_SESSION["$param"]["model"]= $path."model/".$param."/".$param."Model.php";
         }
@@ -44,7 +47,7 @@
                 return '<img src="'.$path.'">';
             }
             if($type == "favicon"){
-                $path = $this->path.$this->assets."img/".$file;
+                $path = $this->path."assets/img/".$file;
                 return '<link rel="icon" href="'.$path.'" />';
             }
         }
