@@ -24,6 +24,8 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="<?=$_SESSION["pathDashboard"];?>">Home</a></li>
+                        <li><a href="<?=$_SESSION["cliente"]["view"]["listar"];?>">Clientes</a></li>
+                        <li><a href="#">Presença</a></li>
                         <li><a href="#">Relatórios</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

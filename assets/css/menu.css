@@ -92,8 +92,6 @@ button{
 
 /* FIM CADASTRO */
 
-/* RODAPE */
-
 /* DASHBOARD */
 
 .dashboard .panel-heading .pull-right a{
@@ -101,6 +99,16 @@ button{
 }
 
 /* FIM DASHBOARD */
+
+/* LISTAR CLIENTE */
+
+.cliente .panel-heading .pull-right a{
+    color: #fff;
+}
+
+/* FIM LISTAR CLIENTE */
+
+/* RODAPE */
 
 .rodape{
     position:relative;

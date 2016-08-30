@@ -21,7 +21,7 @@
                             <div class="col-xs-8">
                                 <div class="form-group">
                                     <label for="nomeCliente">Nome do Evento</label>
-                                    <input type="text" class="form-control" name="nomeEvento" id="nomeEvento" placeholder="Nome do Evento">
+                                    <input type="text" required="" class="form-control" name="nomeEvento" id="nomeEvento" placeholder="Nome do Evento">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-4">
@@ -33,31 +33,16 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12 col-md-3">
+                            <div class="col-xs-12 col-md-8">
                                 <div class="form-group">
                                     <label for="qtdPalestra">Quantidade de Palestras</label>
-                                    <input type="number" class="form-control" name="qtdParticipante" id="qtdPalestra" placeholder="Quantidade de Palestras">
+                                    <input type="number" min="1" pattern="^[0-9]" class="form-control" name="qtdParticipante" id="qtdPalestra" placeholder="Quantidade de Palestras" required>
                                 </div>
                             </div>
-                            <div class="col-xs-3 col-md-2 text-center">
-                                <div class="form-group">
-                                    <label for="tipoEvento">Tipo do evento</label><br/>
-                                    <select name="tipoEvento" id="tipoEvento">
-                                        <option value="0">Aberto</option>
-                                        <option value="1">Fechado</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-xs-9 col-md-3">
-                                <div class="form-group">
-                                    <label for="qtdParticipante">Quantidade de Participante</label>
-                                    <input type="number" class="form-control" name="qtdParticipante" id="qtdParticipante" placeholder="Quantidade de Palestras">
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-md-3">
+                            <div class="col-xs-12 col-md-4">
                                 <div class="form-group">
                                     <label for="crachaEvento">Crachá</label>
-                                    <input type="file" name="crachaEvento" id="crachaEvento">
+                                    <input type="file" required name="crachaEvento" id="crachaEvento">
                                     <p class="help-block">(.jpg, .png)(100x100)px</p>
                                 </div>
                             </div>

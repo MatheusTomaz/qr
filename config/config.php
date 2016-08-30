@@ -1,5 +1,7 @@
 <?php
 
+    require_once "conn.php";
+
     class Config{
 
         // private $home = "/erep/";
@@ -26,13 +28,16 @@
             $this->getPath("pessoas");
             $this->getPath("relatorios");
             $this->getPath("dashboard");
+            $this->getPath("usuario");
         }
 
         function getPath($param){
             $path = $this->path;
+            $_SESSION["$param"]["view"]["listar"]= $path."view/".$param."/listar".ucfirst($param).".php";
             $_SESSION["$param"]["view"]["cadastro"]= $path."view/".$param."/cadastro".ucfirst($param).".php";
             $_SESSION["$param"]["controller"]= $path."controller/".$param."/".$param."Controller.php";
             $_SESSION["$param"]["model"]= $path."model/".$param."/".$param."Model.php";
+            $_SESSION["$param"]["bean"]= $path."bean/".$param."/".$param."Bean.php";
         }
 
         function getAssets($type,$file){
