@@ -1,8 +1,10 @@
 <?
     session_start();
     require_once($_SESSION["dashboard"]["controller"]);
+    require_once($_SESSION["evento"]["controller"]);
     $config = new Config();
     require_once($config->getMenu());
+    $eventoController = new EventoController();
 ?>
 <section class="conteudo dashboard cadastro">
     <div class="row">
@@ -18,66 +20,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    Evento 1
-                    <div class="pull-right">
-                        <a href="<?=$_SESSION["palestra"]["view"]["cadastro"];?>">
-                            <i class="fa fa-2x fa-plus-square" data-toggle="tooltip" data-placement="top" title="Adicionar palestras"></i>
-                        </a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="<?=$_SESSION["pessoas"]["view"]["cadastro"];?>">
-                            <i class="fa fa-2x fa-group" data-toggle="tooltip" data-placement="top" title="Adicionar pessoas"></i>
-                        </a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="<?=$_SESSION["participante"]["view"]["cadastro"];?>">
-                            <i class="fa fa-2x fa-user" data-toggle="tooltip" data-placement="top" title="Adicionar participantes"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    Evento 2
-                    <div class="pull-right">
-                        <a href="<?=$_SESSION["palestra"]["view"]["cadastro"];?>">
-                            <i class="fa fa-2x fa-plus-square" data-toggle="tooltip" data-placement="top" title="Adicionar palestras"></i>
-                        </a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="<?=$_SESSION["pessoas"]["view"]["cadastro"];?>">
-                            <i class="fa fa-2x fa-group" data-toggle="tooltip" data-placement="top" title="Adicionar pessoas"></i>
-                        </a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="<?=$_SESSION["participante"]["view"]["cadastro"];?>">
-                            <i class="fa fa-2x fa-user" data-toggle="tooltip" data-placement="top" title="Adicionar participantes"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    Evento 3
-                    <div class="pull-right">
-                        <a href="<?=$_SESSION["palestra"]["view"]["cadastro"];?>">
-                            <i class="fa fa-2x fa-plus-square" data-toggle="tooltip" data-placement="top" title="Adicionar palestras"></i>
-                        </a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="<?=$_SESSION["pessoas"]["view"]["cadastro"];?>">
-                            <i class="fa fa-2x fa-group" data-toggle="tooltip" data-placement="top" title="Adicionar pessoas"></i>
-                        </a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="<?=$_SESSION["participante"]["view"]["cadastro"];?>">
-                            <i class="fa fa-2x fa-user" data-toggle="tooltip" data-placement="top" title="Adicionar participantes"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    </div>
+    <div id="accordion" class="panel-group">
+        <?=$eventoController->listarEvento();?>
     </div>
 </section>
 <?

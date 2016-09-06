@@ -1,5 +1,4 @@
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <?
-
+<?
     class UsuarioBean{
 
         private $login, $senha, $grupo, $id;

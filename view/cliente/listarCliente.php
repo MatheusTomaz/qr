@@ -5,6 +5,7 @@
     require_once($config->getMenu());
     $controller = new ClienteController();
 ?>
+<?print_r($_SESSION);?>
 <section class="conteudo cliente cadastro">
     <div class="row">
         <div class="col-xs-12">
@@ -20,6 +21,8 @@
             </div>
         </div>
         <?=$controller->getAlert();?>
+    </div>
+    <div id="accordion" class="panel-group">
         <?=$controller->listarCliente();?>
     </div>
 </section>

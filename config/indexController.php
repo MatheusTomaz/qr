@@ -1,41 +1,47 @@
 <?php
 
 // require_once 'conn.php';
-// require_once 'usuarioBean.php';
-// require_once 'usuarioDAO.php';
+require_once '../bean/usuario/usuarioBean.php';
+require_once '../model/loginModel.php';
 require_once 'config.php';
 
 class loginController {
 
 	public $msg;
 
-	private $usuarioDAO, $usuario, $config;
+	private $modelUsuario, $usuario, $config;
 
 	function loginController() {
-  //       $this->config = new Config();
-		// $this->usuarioDAO = new usuarioDAO();
-		// $this->usuario    = new usuario();
+        $this->config = new Config();
+		$this->modelUsuario = new LoginModel();
+		$this->usuario    = new UsuarioBean();
 		if ($_GET["sair"]==1) {
 			session_destroy();
 			header("Location: /sisqrcode/view/login.php");
 		}
-		// if (isset($_POST['submit'])) {
-		// 	$this->usuario->setLogin($_POST['login']);
-		// 	$this->usuario->setSenha($_POST['senha']);
-		// 	$this->fazerLogin();
-		// }
+		if (isset($_POST['login'])) {
+			$this->usuario->setLogin($_POST['login']);
+			$this->usuario->setSenha($_POST['senha']);
+			$this->fazerLogin();
+		}
   //       $this->verificarLogin();
-        $config = new Config();
-        if($_POST['login']=="root"){
-            header("Location: dashboard/dashboard.php");
-        }
+        // $config = new Config();
+        // if($_POST['login']=="root"){
+        //     header("Location: dashboard/dashboard.php");
+        // }
 	}
 
 	function fazerLogin() {
-		$res = $this->usuarioDAO->recuperarUsuario($this->usuario->getLogin(), $this->usuario->getSenha());
+		$res = $this->modelUsuario->buscarUsuario("*", "usuario", "WHERE login = '{$this->usuario->getLogin()}' AND senha = '{$this->usuario->getSenha()}'");
+        $row = mysql_fetch_array($res);
+            $_SESSION["idCliente"] = $row["id"];
 		if (mysql_num_rows($res) > 0) {
+            $res = $this->modelUsuario->buscarUsuario("*", "cliente", "WHERE id = '{$row["cliente_id"]}'");
+            $row = mysql_fetch_array($res);
 			$_SESSION["login"] = $this->usuario->getLogin();
-			header("Location: menu.php");
+            $_SESSION["senha"] = $this->usuario->getSenha();
+            $_SESSION["nomeCliente"] = $row["nome"];
+			header("Location: dashboard/dashboard.php");
 		} else {
 			$this->msg = "<div class='panel msg-erro'>Login e/ou Senha incorretos!</div>";
 		}

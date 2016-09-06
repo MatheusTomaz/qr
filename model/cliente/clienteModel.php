@@ -15,6 +15,7 @@
             $query = "INSERT INTO cliente (nome,endereco_id)
                       VALUES('{$values->getNome()}',
                              '{$values->getEnderecoId()}')";
+                             // die($query);
             return mysql_query($query);
         }
 

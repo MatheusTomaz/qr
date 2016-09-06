@@ -48,6 +48,23 @@ button{
     z-index:1;
 }
 
+.conteudo .panel-collapse .panel-body{
+    background: #DDF0FF;
+}
+
+.conteudo .panel-collapse .panel-body .col-xs-12,
+.conteudo .panel-collapse .panel-body .col-xs-8,
+.conteudo .panel-collapse .panel-body .col-xs-4{
+    margin: 10px 0;
+}
+
+.conteudo .panel-collapse .panel-body .btn-default{
+    background: #01579b;
+    color: white;
+    border: #01579b;
+}
+
+
 /* FIM CONTEUDO */
 
 /* CADASTRO */
@@ -92,6 +109,38 @@ button{
 
 /* FIM CADASTRO */
 
+/* EVENTO */
+
+.dashboard .status-aguardando{
+    color: orange;
+}
+
+.dashboard .status-aberto{
+    color:  green;
+}
+
+.dashboard .thumbnail{
+    /* width: 100px; */
+}
+
+.evento.cadastro .panel-title{
+    margin-top: 10px;
+    font-weight: 900;
+    font-size: 12px;
+}
+
+.evento.cadastro .panel-title hr{
+    margin-top: 5px;
+    border: 1px solid #ccc;
+}
+
+.evento.cadastro .thumbnail{
+    margin: 0 20%;;
+    text-align: center;
+}
+
+/* FIM EVENTO */
+
 /* DASHBOARD */
 
 .dashboard .panel-heading .pull-right a{
@@ -105,6 +154,8 @@ button{
 .cliente .panel-heading .pull-right a{
     color: #fff;
 }
+
+
 
 /* FIM LISTAR CLIENTE */
 

@@ -42,8 +42,8 @@
                         <div class="row">
                             <div class="col-xs-12 col-md-8">
                                 <div class="form-group">
-                                    <label for="loginUsuario">Login</label>
-                                    <input type="text" required class="form-control" name="loginUsuario" id="loginUsuario" placeholder="Usuário" value="<?=$controllerUsuario->getLogin();?>">
+                                    <label for="usuarioCliente">Login</label>
+                                    <input type="text" required class="form-control" name="usuarioCliente" id="usuarioCliente" placeholder="Usuário" value="<?=$controllerUsuario->getLogin();?>">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-4">
