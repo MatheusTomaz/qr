@@ -24,6 +24,7 @@
     <div id="accordion" class="panel-group">
         <?=$eventoController->listarEvento();?>
     </div>
+<?=$config->getAssets("js","evento/evento.js");?>
 </section>
 <?
     require_once($config->getMenuRodape());

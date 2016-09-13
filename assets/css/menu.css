@@ -48,8 +48,26 @@ button{
     z-index:1;
 }
 
+.conteudo .list-group{
+    margin-bottom: 0;
+}
+
+.conteudo .list-group-item:first-child{
+    border-radius: 0;
+}
+
+.conteudo .list-group-item:last-child{
+    border-radius: 0;
+}
+
 .conteudo .panel-collapse .panel-body{
     background: #DDF0FF;
+}
+
+.conteudo .panel-collapse .panel-body .palPart{
+    background: #FFF;
+    padding: 5px 20px;
+    margin-bottom: 20px;
 }
 
 .conteudo .panel-collapse .panel-body .col-xs-12,
@@ -139,6 +157,21 @@ button{
     text-align: center;
 }
 
+.participante.cadastro .panel-title{
+    margin-top: 10px;
+    font-weight: 900;
+    font-size: 12px;
+}
+
+.participante.cadastro .panel-title hr{
+    margin-top: 5px;
+    border: 1px solid #ccc;
+}
+
+.panel-title .pull-right button{
+    margin-top: -20px;
+}
+
 /* FIM EVENTO */
 
 /* DASHBOARD */
@@ -155,9 +188,31 @@ button{
     color: #fff;
 }
 
-
-
 /* FIM LISTAR CLIENTE */
+
+/* LISTAR PALESTRA */
+
+.palestra .panel-heading .pull-right a{
+    color: #fff !important;
+}
+
+.participante .panel-heading .pull-right a{
+    color: #fff !important;
+}
+
+.pessoas .panel-heading .pull-right a{
+    color: #fff !important;
+}
+
+/* FIM LISTAR PALESTRA */
+
+/* LISTAR PARTICIPANTE PALESTRA */
+
+.panel-group .table{
+    background: #FFF;
+}
+
+/* FIM LISTAR PARTICIPANTE PALESTRA */
 
 /* RODAPE */
 

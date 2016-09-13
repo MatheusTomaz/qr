@@ -5,13 +5,6 @@
 
     Class EventoModel{
 
-        private $idEvento;
-        private $nomeEvento;
-        private $status;
-        private $qtdPalestra;
-        private $caminhoLogo;
-        private $caminhoCracha;
-
         function getEvento($campos, $tabela, $options=" "){
             $query = "SELECT $campos FROM $tabela $options";
             // die($query);
@@ -19,9 +12,8 @@
         }
 
         function setEvento($values){
-            $query = "INSERT INTO evento (nome,qtdPalestra,caminhoCracha,caminhoLogo,tipoCracha,usuario_id)
+            $query = "INSERT INTO evento (nome,caminhoCracha,caminhoLogo,tipoCracha,usuario_id)
                       VALUES('{$values->getNome()}',
-                             '{$values->getQtdPalestra()}',
                              '{$values->getCaminhoCracha1()}-{$values->getCaminhoCracha2()}',
                              '{$values->getCaminhoLogo()}',
                              '{$values->getTipoCracha()}',

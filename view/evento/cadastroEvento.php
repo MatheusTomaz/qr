@@ -28,18 +28,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12">
+                            <div class="col-xs-12 col-md-8">
                                 <div class="form-group">
                                     <label for="nomeCliente">Nome do Evento</label>
                                     <input type="text" required="" class="form-control" name="nomeEvento" id="nomeEvento" placeholder="Nome do Evento">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-md-8">
-                                <div class="form-group">
-                                    <label for="qtdPalestra">Quantidade de Palestras</label>
-                                    <input type="number" min="1" pattern="^[0-9]" class="form-control" name="qtdPalestra" id="qtdPalestra" placeholder="Quantidade de Palestras" required>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-4">

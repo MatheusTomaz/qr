@@ -232,9 +232,16 @@
             $model = new EventoModel();
             $row = $model->getEvento("*", "evento", "WHERE usuario_id = '{$_SESSION["idCliente"]}'");
             while($res = mysql_fetch_array($row)){
-                $lista .=   "<div class='panel panel-default'>
+                if($res['status'] == 1){
+                    $row2 = $model->getEvento("*", "palestra", "WHERE evento_id = '{$res["id"]}'");
+                    $qtdPalestra = mysql_num_rows($row2);
+                    $row2 = $model->getEvento("*", "participante", "WHERE evento_id = '{$res["id"]}'");
+                    $qtdParticipante = mysql_num_rows($row2);
+                    $row2 = $model->getEvento("*", "pessoas", "WHERE evento_id = '{$res["id"]}'");
+                    $qtdPessoas = mysql_num_rows($row2);
+                    $lista .=   "<div class='panel panel-default'>
                                 <div class='panel-body'>
-                                <span class='status-".(($res['status'] == 0) ? "aguardando'>" : "aberto'>")."<i class='fa fa-circle'></i>&nbsp;&nbsp;&nbsp;&nbsp;</span><a data-toggle='collapse' data-parent='#accordion' href='#collapse".$res["id"]."
+                                <span class='status-aberto'><i class='fa fa-circle'></i>&nbsp;&nbsp;&nbsp;&nbsp;</span><a data-toggle='collapse' data-parent='#accordion' href='#collapse".$res["id"]."
                                     '>".$res["nome"]."</a>
                                     <div class='pull-right'>
                                         <a href='".$_SESSION["palestra"]["view"]["cadastro"]."?id=".$res["id"]."'>
@@ -245,7 +252,7 @@
                                             <i class='fa fa-2x fa-group' data-toggle='tooltip' data-placement='top' title='Adicionar pessoas'></i>
                                         </a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a href='".$_SESSION["participante"]["view"]["cadastro"]."?id=".$res["id"]."'>
+                                        <a href='".$_SESSION["participante"]["view"]["cadastro"]."?id=".$res["id"]."&tipo=todos'>
                                             <i class='fa fa-2x fa-user' data-toggle='tooltip' data-placement='top' title='Adicionar participantes'></i>
                                         </a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -254,7 +261,7 @@
                                         </a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                         <a href='#' onclick='excluir({$res['id']},\"" .$res['nome']."\");'>
-                                            <i class='fa fa-2x fa-close' data-toggle='tooltip' data-placement='top' title='Excluir cliente'></i>
+                                            <i class='fa fa-2x fa-close' data-toggle='tooltip' data-placement='top' title='Excluir evento'></i>
                                         </a>
                                     </div>
                                 </div>
@@ -263,22 +270,61 @@
                                         <div class='row'>
                                             <div class='col-xs-4 col-md-2'>
                                                 <div class='thumbnail'>
-                                                    <img src='".(isset($res["caminhoLogo"]) ? "../../assets/img/exemplo_logo.jpg" : $res["caminhoLogo"])."'>
+                                                    <img src='".(empty($res["caminhoLogo"]) ? "../../assets/img/exemplo_logo.jpg" : $res["caminhoLogo"])."'>
                                                 </div>
                                             </div>
                                             <div class='col-xs-8 col-md-4'>
-                                                <b>Status:</b> <span class='status-".(($res['status'] == 0) ? "aguardando'>Aguardando aprovação" : "aberto'>Aberto")."</span>
+                                                <b>Status:</b> <span class='status-aberto'>Aberto</span>
                                             </div>
                                             <div class='col-xs-12 col-md-2'>
-                                                <b>Palestras:</b> ".$res['qtdPalestra']."
+                                                <b>Palestras:</b> ".$qtdPalestra."<br><br>
+                                                <button class='btn btn-default' onclick=\"location.href='".$_SESSION["palestra"]["view"]["listar"]."?id=".$res['id']."'\">Ver Palestras</button>
+                                            </div>
+                                            <div class='col-xs-12 col-md-2'>
+                                                <b>Pessoas:</b> ".$qtdPessoas."<br><br>
+                                                <button class='btn btn-default' onclick=\"location.href='".$_SESSION["pessoas"]["view"]["listar"]."?id=".$res['id']."'\">Ver Pessoas</button>
+                                            </div>
+                                            <div class='col-xs-12 col-md-2'>
+                                                <b>Participantes:</b> ".$qtdParticipante."<br><br>
+                                                <button class='btn btn-default' onclick=\"location.href='".$_SESSION["participante"]["view"]["listar"]."?id=".$res['id']."'\">Ver Participantes</button>
                                             </div>
                                         </div>
                                         <div class='row'>
                                             <div class='col-xs-12 col-md-12'>
-                                                <button class='btn btn-default pull-right' onclick='#'>Ver Palestras</button>
+                                                <div class='pull-right'>
+                                                    <button class='btn btn-default' onclick=\"location.href='".$_SESSION["participante"]["view"]["listar"]."?id=".$res['id']."'\">Gerar Crachás</button>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </div>";
+                }else{
+                    $lista .=   "<div class='panel panel-default'>
+                                <div class='panel-body'>
+                                <span class='status-aguardando'><i class='fa fa-circle'></i>&nbsp;&nbsp;&nbsp;&nbsp;</span><a data-toggle='collapse' data-parent='#accordion' href='#collapse".$res["id"]."
+                                    '>".$res["nome"]."</a>
+                                    <div class='pull-right'>
+                                        <a href='#'>
+                                            <i class='fa fa-2x fa-gear' data-toggle='tooltip' data-placement='top' title='Editar evento'></i>
+                                        </a>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href='#' onclick='excluir({$res['id']},\"" .$res['nome']."\");'>
+                                            <i class='fa fa-2x fa-close' data-toggle='tooltip' data-placement='top' title='Excluir evento'></i>
+                                        </a>
                                     </div>
+                                </div>
+                                <div id='collapse".$res["id"]."' class='panel-collapse collapse'>
+                                    <div class='panel-body'>
+                                        <div class='row'>
+                                            <div class='col-xs-4 col-md-2'>
+                                                <div class='thumbnail'>
+                                                    <img src='".(empty($res["caminhoLogo"]) ? "../../assets/img/exemplo_logo.jpg" : $res["caminhoLogo"])."'>
+                                                </div>
+                                            </div>
+                                            <div class='col-xs-8 col-md-4'>
+                                                <b>Status:</b> <span class='status-aguardando'>Aguardando aprovação</span>
+                                            </div>
+                                        </div>";
+                }
+                $lista .= "</div>
                                 </div>
                             </div>";
 
