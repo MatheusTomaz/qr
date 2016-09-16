@@ -1,6 +1,7 @@
 <?
     require_once '../../config/config.php';
     $config = new Config();
+    $config->verificarLogin();
 ?>
 <!DOCTYPE html>
 <html>

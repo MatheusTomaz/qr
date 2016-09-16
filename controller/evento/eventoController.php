@@ -24,6 +24,9 @@
                     $this->cadastrarEvento();
                 }
             }
+            if(isset($_GET["excluir"])){
+                $this->excluirEvento($_GET["excluir"]);
+            }
         }
 
         function cadastrarEvento(){
@@ -105,6 +108,33 @@
                     break;
             }
             $this->alert = $this->gerarAlert($tipo,$texto);
+        }
+
+        function verificaEventoAberto($id){
+            $row = $this->modelEvento->getEvento("*","participante_has_palestra","WHERE palestra_evento_id = ".$id);
+            if(mysql_num_rows($row)>0){
+                $status = false;
+                while($res = mysql_fetch_array($row)){
+                    if($res["presenca"]==1){
+                        $status = true;
+                    }
+                }
+            }
+            return $status;
+        }
+
+        function verificaEventoFinalizado($id){
+            $row = $this->modelEvento->getEvento("*","palestra","WHERE evento_id = ".$id);
+            $status = false;
+            if(mysql_num_rows($row)>0){
+                $status = true;
+                while($res = mysql_fetch_array($row)){
+                    if($res["status"]==0){
+                        $status = false;
+                    }
+                }
+            }
+            return $status;
         }
 
         function verificarImagens(){
@@ -222,6 +252,18 @@
             }
         }
 
+        function excluirEvento($id){
+            $tipo = "danger";
+            $texto = "Não é possível excluir o evento";
+            if(!$this->verificaEventoAberto($id)){
+                if($this->modelEvento->removeEvento($id)){
+                    $tipo = "success";
+                    $texto = "Evento excluído com sucesso!";
+                }
+            }
+            $this->alert = $this->gerarAlert($tipo, $texto);
+        }
+
         function getIdEvento(){
             $row = $this->modelEvento->getUltimoEvento($_SESSION["idCliente"]);
             $row = mysql_fetch_array($row);
@@ -230,39 +272,96 @@
 
         function listarEvento(){
             $model = new EventoModel();
-            $row = $model->getEvento("*", "evento", "WHERE usuario_id = '{$_SESSION["idCliente"]}'");
+            $row = $model->getEvento("*", "evento", "WHERE usuario_id = '{$_SESSION["idCliente"]}' ORDER BY data_criado");
             while($res = mysql_fetch_array($row)){
-                if($res['status'] == 1){
-                    $row2 = $model->getEvento("*", "palestra", "WHERE evento_id = '{$res["id"]}'");
-                    $qtdPalestra = mysql_num_rows($row2);
-                    $row2 = $model->getEvento("*", "participante", "WHERE evento_id = '{$res["id"]}'");
-                    $qtdParticipante = mysql_num_rows($row2);
-                    $row2 = $model->getEvento("*", "pessoas", "WHERE evento_id = '{$res["id"]}'");
-                    $qtdPessoas = mysql_num_rows($row2);
+                $row2 = $model->getEvento("*", "palestra", "WHERE evento_id = '{$res["id"]}'");
+                $qtdPalestra = mysql_num_rows($row2);
+                $row2 = $model->getEvento("*", "participante", "WHERE evento_id = '{$res["id"]}'");
+                $qtdParticipante = mysql_num_rows($row2);
+                $row2 = $model->getEvento("*", "pessoas", "WHERE evento_id = '{$res["id"]}'");
+                $qtdPessoas = mysql_num_rows($row2);
+                if($this->verificaEventoFinalizado($res["id"])){
                     $lista .=   "<div class='panel panel-default'>
                                 <div class='panel-body'>
-                                <span class='status-aberto'><i class='fa fa-circle'></i>&nbsp;&nbsp;&nbsp;&nbsp;</span><a data-toggle='collapse' data-parent='#accordion' href='#collapse".$res["id"]."
-                                    '>".$res["nome"]."</a>
-                                    <div class='pull-right'>
-                                        <a href='".$_SESSION["palestra"]["view"]["cadastro"]."?id=".$res["id"]."'>
-                                            <i class='fa fa-2x fa-plus-square' data-toggle='tooltip' data-placement='top' title='Adicionar palestras'></i>
-                                        </a>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a href='".$_SESSION["pessoas"]["view"]["cadastro"]."?id=".$res["id"]."'>
-                                            <i class='fa fa-2x fa-group' data-toggle='tooltip' data-placement='top' title='Adicionar pessoas'></i>
-                                        </a>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a href='".$_SESSION["participante"]["view"]["cadastro"]."?id=".$res["id"]."&tipo=todos'>
-                                            <i class='fa fa-2x fa-user' data-toggle='tooltip' data-placement='top' title='Adicionar participantes'></i>
-                                        </a>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a href='#'>
-                                            <i class='fa fa-2x fa-gear' data-toggle='tooltip' data-placement='top' title='Configurações de conta'></i>
-                                        </a>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a href='#' onclick='excluir({$res['id']},\"" .$res['nome']."\");'>
-                                            <i class='fa fa-2x fa-close' data-toggle='tooltip' data-placement='top' title='Excluir evento'></i>
-                                        </a>
+                                    <div class='row'>
+                                        <div class='col-xs-8'>
+                                            <span class='status-finalizado'><i class='fa fa-circle'></i>&nbsp;&nbsp;&nbsp;&nbsp;</span><a data-toggle='collapse' data-parent='#accordion' href='#collapse".$res["id"]."
+                                            '>".$res["nome"]."</a>
+                                        </div>
+                                        <div class='col-xs-4'>
+                                            <div class='row'>
+                                                <div class='col-xs-2'></div>
+                                                <div class='col-xs-2'></div>
+                                                <div class='col-xs-2'></div>
+                                                <div class='col-xs-2'></div>
+                                                <div class='col-xs-2'>
+                                                    <a href='#'>
+                                                        <i class='fa fa-2x fa-gear' data-toggle='tooltip' data-placement='top' title='Configurações de conta'></i>
+                                                    </a>
+                                                </div>
+                                                <div class='col-xs-2'></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id='collapse".$res["id"]."' class='panel-collapse collapse'>
+                                    <div class='panel-body'>
+                                        <div class='row'>
+                                            <div class='col-xs-4 col-md-2'>
+                                                <div class='thumbnail'>
+                                                    <img src='".(empty($res["caminhoLogo"]) ? "../../assets/img/exemplo_logo.jpg" : $res["caminhoLogo"])."'>
+                                                </div>
+                                            </div>
+                                            <div class='col-xs-8 col-md-4'>
+                                                <b>Status:</b> <span class='status-finalizado'>Finalizado</span>
+                                            </div>
+                                            <div class='col-xs-12 col-md-2'></div>
+                                            <div class='col-xs-12 col-md-2'></div>
+                                            <div class='col-xs-12 col-md-2'>
+                                                <b>Palestras:</b> ".$qtdPalestra."<br><br>
+                                                <button class='btn btn-default' onclick=\"location.href='".$_SESSION["palestra"]["view"]["listar"]."?id=".$res['id']."'\">Ver Palestras</button>
+                                            </div>
+
+                                        </div>";
+                }else if($res['status'] == 1){
+
+                    $lista .=   "<div class='panel panel-default'>
+                                <div class='panel-body'>
+                                    <div class='row'>
+                                        <div class='col-xs-8'>
+                                            <span class='status-aberto'><i class='fa fa-circle'></i>&nbsp;&nbsp;&nbsp;&nbsp;</span><a data-toggle='collapse' data-parent='#accordion' href='#collapse".$res["id"]."
+                                            '>".$res["nome"]."</a>
+                                        </div>
+                                        <div class='col-xs-4'>
+                                            <div class='row'>
+                                                <div class='col-xs-2'></div>
+                                                <div class='col-xs-2'>
+                                                    <a href='".$_SESSION["palestra"]["view"]["cadastro"]."?id=".$res["id"]."'>
+                                                        <i class='fa fa-2x fa-plus-square' data-toggle='tooltip' data-placement='top' title='Adicionar palestras'></i>
+                                                    </a>
+                                                </div>
+                                                <div class='col-xs-2'>
+                                                    <a href='".$_SESSION["pessoas"]["view"]["cadastro"]."?id=".$res["id"]."'>
+                                                        <i class='fa fa-2x fa-group' data-toggle='tooltip' data-placement='top' title='Adicionar pessoas'></i>
+                                                    </a>
+                                                </div>
+                                                <div class='col-xs-2'>
+                                                    <a href='".$_SESSION["participante"]["view"]["cadastro"]."?id=".$res["id"]."&tipo=todos'>
+                                                        <i class='fa fa-2x fa-user' data-toggle='tooltip' data-placement='top' title='Adicionar participantes'></i>
+                                                    </a>
+                                                </div>
+                                                <div class='col-xs-2'>
+                                                    <a href='#'>
+                                                        <i class='fa fa-2x fa-gear' data-toggle='tooltip' data-placement='top' title='Configurações de conta'></i>
+                                                    </a>
+                                                </div>
+                                                <div class='col-xs-2'>
+                                                    <a href='#' ".($this->verificaEventoAberto($res['id']) ? "style='display:none'":"")." onclick='excluir({$res['id']},\"" .$res['nome']."\");'>
+                                                        <i class='fa fa-2x fa-close' data-toggle='tooltip' data-placement='top' title='Excluir evento'></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div id='collapse".$res["id"]."' class='panel-collapse collapse'>
@@ -299,16 +398,29 @@
                 }else{
                     $lista .=   "<div class='panel panel-default'>
                                 <div class='panel-body'>
-                                <span class='status-aguardando'><i class='fa fa-circle'></i>&nbsp;&nbsp;&nbsp;&nbsp;</span><a data-toggle='collapse' data-parent='#accordion' href='#collapse".$res["id"]."
-                                    '>".$res["nome"]."</a>
-                                    <div class='pull-right'>
-                                        <a href='#'>
-                                            <i class='fa fa-2x fa-gear' data-toggle='tooltip' data-placement='top' title='Editar evento'></i>
-                                        </a>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a href='#' onclick='excluir({$res['id']},\"" .$res['nome']."\");'>
-                                            <i class='fa fa-2x fa-close' data-toggle='tooltip' data-placement='top' title='Excluir evento'></i>
-                                        </a>
+                                    <div class='row'>
+                                        <div class='col-xs-8'>
+                                            <span class='status-aguardando'><i class='fa fa-circle'></i>&nbsp;&nbsp;&nbsp;&nbsp;</span><a data-toggle='collapse' data-parent='#accordion' href='#collapse".$res["id"]."
+                                                '>".$res["nome"]."</a>
+                                        </div>
+                                        <div class='col-xs-4'>
+                                            <div class='row'>
+                                                <div class='col-xs-2'></div>
+                                                <div class='col-xs-2'></div>
+                                                <div class='col-xs-2'></div>
+                                                <div class='col-xs-2'></div>
+                                                <div class='col-xs-2'>
+                                                    <a href='#'>
+                                                        <i class='fa fa-2x fa-gear' data-toggle='tooltip' data-placement='top' title='Configurações de conta'></i>
+                                                    </a>
+                                                </div>
+                                                <div class='col-xs-2'>
+                                                    <a href='#' onclick='excluir({$res['id']},\"" .$res['nome']."\");'>
+                                                        <i class='fa fa-2x fa-close' data-toggle='tooltip' data-placement='top' title='Excluir evento'></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div id='collapse".$res["id"]."' class='panel-collapse collapse'>

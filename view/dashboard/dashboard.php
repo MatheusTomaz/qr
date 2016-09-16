@@ -6,6 +6,10 @@
     require_once($config->getMenu());
     $eventoController = new EventoController();
 ?>
+<!-- <?=$config->verificaPath()?>
+<noscript>
+    <?=$config->alertNoJS();?>
+</noscript> -->
 <section class="conteudo dashboard cadastro">
     <div class="row">
         <div class="col-xs-12">
@@ -20,7 +24,9 @@
                 </div>
             </div>
         </div>
+        <?=$eventoController->getAlert();?>
     </div>
+
     <div id="accordion" class="panel-group">
         <?=$eventoController->listarEvento();?>
     </div>

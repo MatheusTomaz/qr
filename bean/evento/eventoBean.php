@@ -2,15 +2,15 @@
 
     class EventoBean{
 
-        private $idEvento;
-        private $nomeEvento;
-        private $status;
-        private $qtdPalestra;
-        private $caminhoLogo;
-        private $caminhoCracha1;
-        private $caminhoCracha2;
-        private $tipoCracha;
-        private $usuarioId;
+        public $idEvento;
+        public $nomeEvento;
+        public $status;
+        public $qtdPalestra;
+        public $caminhoLogo;
+        public $caminhoCracha1;
+        public $caminhoCracha2;
+        public $tipoCracha;
+        public $usuarioId;
 
         public function getUsuarioId(){
             return $this->usuarioId;

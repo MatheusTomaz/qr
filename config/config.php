@@ -40,6 +40,31 @@
             $_SESSION["$param"]["bean"]= $path."bean/".$param."/".$param."Bean.php";
         }
 
+        function verificaPath(){
+            $script = "<script type='text/javascript' charset='utf-8'>
+                        var a = parent.window.document.location;
+                        if(a.pathname != '/sisqrcode/'){
+                            window.location.href = '/sisqrcode/';
+                        }
+                        </script>";
+            return $script;
+        }
+
+        function alertNoJS(){
+            $script = "<style type='text/css'>.conteudo, .menu {display:none;}</style><div class='noscriptmsg'>";
+            $script .= $this->gerarAlert('info','Para usar o RCode, habilite o JavaScript no seu Navegador');
+            $script .= "</div>";
+            return $script;
+        }
+
+        function gerarAlert($tipo,$texto){
+            return "<div class='col-xs-12'><div class='alert alert-".$tipo."' role='alert'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                        <span aria-hidden='true'>&times;</span>
+                                    </button>
+                                    ".$texto."</div></div>";
+        }
+
         function getAssets($type,$file){
             $path = $this->path."assets/".$type."/".$file;
             if($type == "css"){
@@ -54,6 +79,18 @@
             if($type == "favicon"){
                 $path = $this->path."assets/img/".$file;
                 return '<link rel="icon" href="'.$path.'" />';
+            }
+        }
+
+        function verificarLogin($param = "NULL") {
+            if($param == "login"){
+                if(isset($_SESSION["login"])){
+                    header('Location: /sisqrcode/view/dashboard/dashboard.php');
+                }
+            }else{
+                if (!isset($_SESSION["login"])) {
+                    header('Location: /sisqrcode/view/login.php');
+                }
             }
         }
 

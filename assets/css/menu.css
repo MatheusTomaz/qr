@@ -137,6 +137,10 @@ button{
     color:  green;
 }
 
+.dashboard .status-finalizado{
+    color:  red;
+}
+
 .dashboard .thumbnail{
     /* width: 100px; */
 }

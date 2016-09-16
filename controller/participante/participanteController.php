@@ -88,6 +88,19 @@
             return false;
         }
 
+        function verificaPalestraAberta($id){
+            $row = $this->modelParticipante->getParticipante("*","participante_has_palestra","WHERE palestra_id = ".$id." AND palestra_evento_id = ".$this->eventoId);
+            if(mysql_num_rows($row)>0){
+                $status = false;
+                while($res = mysql_fetch_array($row)){
+                    if($res["presenca"]==1){
+                        $status = true;
+                    }
+                }
+            }
+            return $status;
+        }
+
         function listarPalestras(){
             $row = $this->modelParticipante->getParticipante("*","palestra","WHERE evento_id = ".$this->eventoId);
             $row2 = $this->modelParticipante->getParticipante("nome","evento","WHERE id = ".$this->eventoId);
@@ -108,49 +121,55 @@
                         <div class='row'>
                             <div class='col-xs-12'>
                                 <b>Selecione as palestras em que o participante será inscrito:</b><br>
+
                                 <div class='panel-group'>";
-            if(mysql_num_rows($row) > 0){
+            $flag = true;
+            if(mysql_num_rows($row) > 0 ){
                 while($res = mysql_fetch_array($row)){
                     $qtdPartPal = $this->modelParticipante->getParticipante("*","participante_has_palestra","WHERE palestra_id = ".$res['id']);
                     $qtdPartPal = mysql_num_rows($qtdPartPal);
-                    if($qtdPartPal<$res["qtdParticipante"]){
-                        $lista .=   "<div class='panel panel-default'>
-                                    <div class='panel-body'>
-                                        <div class='row'>
-                                            <div class='col-xs-1'>
-                                                <input type='checkbox' name='palestrasParticipante[]' id='palestrasParticipante{$res['id']}' value='{$res["id"]}'>
-                                            </div>
-                                            <div class='col-xs-5'>
-                                                ".$res["nome"]."
-                                            </div>
-                                            <div class='col-xs-2'>
-                                                ".$res["tipo"]."
-                                            </div>
-                                            <div class='col-xs-4 text-right'>
-                                                <b>Nº de participantes</b>: ".$qtdPartPal." / ".$res["qtdParticipante"]."
+                    if($res["status"]==0){
+                        if($qtdPartPal<$res["qtdParticipante"]){
+                            $lista .=   "<div class='panel panel-default'>
+                                        <div class='panel-body'>
+                                            <div class='row'>
+                                                <div class='col-xs-1'>
+                                                    <input type='checkbox' name='palestrasParticipante[]' id='palestrasParticipante{$res['id']}' value='{$res["id"]}'>
+                                                </div>
+                                                <div class='col-xs-5'>
+                                                    ".$res["nome"]."
+                                                </div>
+                                                <div class='col-xs-2'>
+                                                    ".$res["tipo"]."
+                                                </div>
+                                                <div class='col-xs-4 text-right'>
+                                                    <b>Nº de participantes</b>: ".$qtdPartPal." / ".$res["qtdParticipante"]."
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>";
-                    }else{
-                        $lista .=   "<div class='panel panel-default'>
-                                    <div class='panel-body bg-danger'>
-                                        <div class='row'>
-                                            <div class='col-xs-1'>
+                                    </div>";
+                        }else{
+                            $lista .=   "<div class='panel panel-default'>
+                                        <div class='panel-body bg-danger'>
+                                            <div class='row'>
+                                                <div class='col-xs-1'>
 
-                                            </div>
-                                            <div class='col-xs-6'>
-                                                ".$res["nome"]."
-                                            </div>
-                                            <div class='col-xs-5 text-right'>
-                                                <b>Sem vagas!</b>
+                                                </div>
+                                                <div class='col-xs-6'>
+                                                    ".$res["nome"]."
+                                                </div>
+                                                <div class='col-xs-5 text-right'>
+                                                    <b>Sem vagas!</b>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>";
+                                    </div>";
+                        }
+                        $flag = false;
                     }
                 }
-            }else{
+            }
+            if(mysql_num_rows($row)<1 || $flag){
                 $lista .=   "<div class='row'>
                                 <div class='col-xs-12'>
                                     <div class='panel panel-default'>
@@ -165,6 +184,20 @@
                     </div>
                 </div>";
             return $lista;
+        }
+
+        function verificaParticipantePresenca($id){
+            $row = $this->modelParticipante->getParticipante("*","participante_has_palestra","WHERE participante_id = ".$id." AND palestra_evento_id = ".$this->eventoId);
+            if(mysql_num_rows($row)>0){
+                $status = false;
+                while($res = mysql_fetch_array($row)){
+                    if($res["presenca"]==1){
+                        $status = true;
+                        break;
+                    }
+                }
+            }
+            return $status;
         }
 
         function listarParticipantes(){
@@ -233,20 +266,15 @@
                 $row = $this->modelParticipante->getParticipante("*","participante","WHERE evento_id = ".$this->eventoId);
                 if(mysql_num_rows($row) > 0){
                     while($res = mysql_fetch_array($row)){
-                        $row3 = $this->modelParticipante->getParticipante("*","participante_has_palestra","WHERE palestra_evento_id = ".$this->eventoId." AND participante_id = ".$res['id']);
-                        $status = false;
-                        while($res2 = mysql_fetch_array($row3)){
-                            if($res2["presenca"]==1){
-                                $status = true;
-                                break;
-                            }
-                        }
+                        $status = $this->verificaParticipantePresenca($res['id']);
                         $lista .=   "<div class='panel panel-default'>
                                         <div class='panel-body'>
                                             <div class='row'>
-                                            ".($status ? "<div class='col-xs-1'></div>":"<div class='col-xs-1'>
-                                                    <input type='checkbox' name='listaParticipante[]' id='palestrasParticipante{$res['id']}' value='{$res["id"]}'>
-                                                </div>")."
+                                                <div class='col-xs-1'>
+                                                    <input type='checkbox'
+                                                    ".($status ? "style='display:none'":"name='listaParticipante[]'").
+                                                    "participanteController.php  id='palestrasParticipante{$res['id']}' value='{$res["id"]}'>
+                                                </div>
 
                                                 <div class='col-xs-5'>
                                                     <a data-toggle='collapse' data-parent='#accordion' href='#collapse".$res["id"]."'>".$res["nome"]."</a>
@@ -305,8 +333,26 @@
         function excluirParticipante($id){
             $row = $this->modelParticipante->getParticipante("*","participante_has_palestra","WHERE participante_id = ".$id);
             $row2 = $this->modelParticipante->getParticipante("*","participante","WHERE id = ".$id." AND evento_id = ".$this->eventoId);
-            if(mysql_num_rows($row)>0){
-                if($this->modelParticipante->removeParticipantePalestra($id,$this->eventoId)){
+            if(!$this->verificaParticipantePresenca($id)){
+                if(mysql_num_rows($row)>0){
+                    if($this->modelParticipante->removeParticipantePalestra($id,$this->eventoId)){
+                        if(mysql_num_rows($row2)>0){
+                            if($this->modelParticipante->removeParticipante($id,$this->eventoId)){
+                                $tipo = "success";
+                                $texto = "Participante excluído com sucesso!";
+                            }else{
+                                $tipo = "danger";
+                                $texto = "Erro ao excluir o participante!(Palestras)";
+                            }
+                        }else{
+                            $tipo = "success";
+                            $texto = "Participante excluído com sucesso!";
+                        }
+                    }else{
+                        $tipo = "danger";
+                        $texto = "Erro ao excluir o participante!";
+                    }
+                }else{
                     if(mysql_num_rows($row2)>0){
                         if($this->modelParticipante->removeParticipante($id,$this->eventoId)){
                             $tipo = "success";
@@ -319,25 +365,10 @@
                         $tipo = "success";
                         $texto = "Participante excluído com sucesso!";
                     }
-                }else{
-                    $tipo = "danger";
-                    $texto = "Erro ao excluir o participante!";
                 }
             }else{
-                if(mysql_num_rows($row2)>0){
-                    if($this->modelParticipante->removeParticipante($id,$this->eventoId)){
-                        $tipo = "success";
-                        $texto = "Participante excluído com sucesso!";
-                    }else{
-                        $tipo = "danger";
-                        $texto = "Erro ao excluir o participante!(Palestras)";
-                        break;
-                    }
-                }else{
-                    $tipo = "success";
-                    $texto = "Participante excluído com sucesso!";
-                    break;
-                }
+                $tipo = "danger";
+                $texto = "Não é possível excluir participante!";
             }
             $this->alert = $this->gerarAlert($tipo,$texto);
         }
@@ -347,8 +378,26 @@
             foreach($ids as $id){
                 $row = $this->modelParticipante->getParticipante("*","participante_has_palestra","WHERE participante_id = ".$id);
                 $row2 = $this->modelParticipante->getParticipante("*","participante","WHERE id = ".$id);
-                if(mysql_num_rows($row)>0){
-                    if($this->modelParticipante->removeParticipantePalestra($id,$this->eventoId)){
+                if(!$this->verificaParticipantePresenca($id)){
+                    if(mysql_num_rows($row)>0){
+                        if($this->modelParticipante->removeParticipantePalestra($id,$this->eventoId)){
+                            if(mysql_num_rows($row2)>0){
+                                if($this->modelParticipante->removeParticipante($id,$this->eventoId)){
+                                    $tipo = "success";
+                                    $texto = "Participante excluído com sucesso!";
+                                }else{
+                                    $tipo = "danger";
+                                    $texto = "Erro ao excluir o participante!(Palestras)";
+                                }
+                            }else{
+                                $tipo = "success";
+                                $texto = "Participante excluído com sucesso!";
+                            }
+                        }else{
+                            $tipo = "danger";
+                            $texto = "Erro ao excluir o participante!";
+                        }
+                    }else{
                         if(mysql_num_rows($row2)>0){
                             if($this->modelParticipante->removeParticipante($id,$this->eventoId)){
                                 $tipo = "success";
@@ -363,26 +412,11 @@
                             $texto = "Participante excluído com sucesso!";
                             break;
                         }
-                    }else{
-                        $tipo = "danger";
-                        $texto = "Erro ao excluir o participante!";
-                        break;
                     }
                 }else{
-                    if(mysql_num_rows($row2)>0){
-                        if($this->modelParticipante->removeParticipante($id,$this->eventoId)){
-                            $tipo = "success";
-                            $texto = "Participante excluído com sucesso!";
-                        }else{
-                            $tipo = "danger";
-                            $texto = "Erro ao excluir o participante!(Palestras)";
-                            break;
-                        }
-                    }else{
-                        $tipo = "success";
-                        $texto = "Participante excluído com sucesso!";
-                        break;
-                    }
+                    $tipo = "danger";
+                    $texto = "Não é possível excluir participante!";
+                    break;
                 }
             }
             $this->alert = $this->gerarAlert($tipo,$texto);

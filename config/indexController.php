@@ -15,21 +15,26 @@ class loginController {
         $this->config = new Config();
 		$this->modelUsuario = new LoginModel();
 		$this->usuario    = new UsuarioBean();
-		if ($_GET["sair"]==1) {
-			session_destroy();
-			header("Location: /sisqrcode/view/login.php");
-		}
+        $this->fazerLogout();
 		if (isset($_POST['login'])) {
 			$this->usuario->setLogin($_POST['login']);
 			$this->usuario->setSenha($_POST['senha']);
 			$this->fazerLogin();
 		}
-  //       $this->verificarLogin();
-        // $config = new Config();
-        // if($_POST['login']=="root"){
-        //     header("Location: dashboard/dashboard.php");
-        // }
+        $this->config->verificarLogin("login");
 	}
+
+    function fazerLogout(){
+        if(isset($_SESSION["login"])){
+            if ($_GET["sair"]==1) {
+                session_destroy();
+                unset($_SESSION["login"]);
+                unset($_SESSION["senha"]);
+                header("Location: /sisqrcode/view/login.php");
+            }
+        }
+
+    }
 
 	function fazerLogin() {
 		$res = $this->modelUsuario->buscarUsuario("*", "usuario", "WHERE login = '{$this->usuario->getLogin()}' AND senha = '{$this->usuario->getSenha()}'");
@@ -47,17 +52,7 @@ class loginController {
 		}
 	}
 
-	function verificarLogin() {
-		if (!isset($_SESSION["login"])) {
-            if($_SERVER['REQUEST_URI']!=($this->config->getHome()."index.php")){
-                header('Location: index.php');
-            }
-        }else{
-            if($_SERVER['REQUEST_URI']==($this->config->getHome()."index.php") || $_SERVER['REQUEST_URI']==($this->config->getHome())){
-                header('Location: menu.php');
-            }
-		}
-	}
+
 }
 
 ?>

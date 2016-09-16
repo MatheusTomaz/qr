@@ -28,6 +28,19 @@
             $this->finalizarPalestra();
         }
 
+        function verificaEventoAberto($id){
+            $row = $this->modelPalestra->getPalestra("*","participante_has_palestra","WHERE palestra_evento_id = ".$id);
+            if(mysql_num_rows($row)>0){
+                $status = false;
+                while($res = mysql_fetch_array($row)){
+                    if($res["presenca"]==1){
+                        $status = true;
+                    }
+                }
+            }
+            return $status;
+        }
+
         function cadastrarPalestra(){
             if($this->modelPalestra->setPalestra($this->bean)){
                 $tipo = "success";
@@ -65,6 +78,41 @@
             }
         }
 
+        function excluirPalestra($id){
+            $row = $this->modelPalestra->getPalestra("*","participante_has_palestra","WHERE palestra_id = ".$id);
+            $row2 = $this->modelPalestra->getPalestra("*","palestra","WHERE id = ".$id." AND evento_id = ".$this->eventoId);
+            $palestra = mysql_fetch_array($row2);
+            $row2 = $this->modelPalestra->getPalestra("*","palestra","WHERE id = ".$id." AND evento_id = ".$this->eventoId);
+            if($palestra["status"]==0){
+                if($this->verificaPalestraAberta($id)){
+                    if(mysql_num_rows($row) > 0){
+                        if(mysql_num_rows($row2) > 0){
+                            if($this->modelPalestra->removePalestra($id,$this->eventoId)){
+                                $tipo = "success";
+                                $texto = "Palestra removida com sucesso!";
+                            }else{
+                                $tipo = "danger";
+                                $texto = "Não foi possível remover Palestra";
+                            }
+                        }else{
+                            $tipo = "danger";
+                            $texto = "Palestra não existe!";
+                        }
+                    }else{
+                        $tipo = "danger";
+                        $texto = "Palestra não existe!";
+                    }
+                }else{
+                    $tipo = "danger";
+                    $texto = "Não é possível remover palestra!";
+                }
+            }else{
+                $tipo = "danger";
+                $texto = "Não é possível remover palestra finalizada!";
+            }
+            $this->alert = $this->gerarAlert($tipo,$texto);
+        }
+
         function listarPalestras(){
             $row2 = $this->modelPalestra->getPalestra("*","evento","WHERE id = ".$this->eventoId);
             $nomeEvento = mysql_fetch_array($row2);
@@ -73,16 +121,21 @@
                                 <div class='panel-heading'>
                                     Palestras Cadastradas ({$nomeEvento['nome']})";
             if($_SERVER["SCRIPT_NAME"] == "/sisqrcode/view/palestra/listarPalestra.php"){
-                $lista .= "<div class='pull-right'>
+                if(!$this->verificaEventoAberto($this->eventoId)){
+                    $lista .= "<div class='pull-right'>
                                 <a href='".$_SESSION["palestra"]["view"]["cadastro"]."?id={$_GET['id']}'>
                                     <i class='fa fa-2x fa-plus' data-toggle='tooltip' data-placement='bottom' title='Cadastrar palestra'></i>
                                 </a>
                             </div>";
+                }
             }
             $lista .= "</div>
                     </div>
-                </div>
-                <div class='col-xs-12'>
+                </div>";
+            if($_SERVER["SCRIPT_NAME"] == "/sisqrcode/view/palestra/listarPalestra.php"){
+                $lista .= $this->alert;
+            }
+            $lista .= "<div class='col-xs-12'>
                     <div class='panel-group'>";
             $row = $this->modelPalestra->getPalestra("*","palestra","WHERE evento_id = ".$this->eventoId);
             if(mysql_num_rows($row) > 0){
@@ -117,7 +170,7 @@
                                                         </a>
                                                     </div>
                                                     ".($this->verificaPalestraAberta($res['id'])?"<div class='col-xs-3'></div>":"<div class='col-xs-3'>
-                                                    <a href='#' onclick='excluir({$res['id']},\"" .$res['nome']."\");'>
+                                                    <a onclick='excluir({$res['id']},{$this->eventoId},\"" .$res['nome']."\");'>
                                                         <i class='fa fa-2x fa-close' data-toggle='tooltip' data-placement='top' title='Excluir palestra'></i>
                                                     </a></div>")."
                                                 </div>":"<span class='label label-danger pull-right'>Finalizada</span>")."
