@@ -1,6 +1,8 @@
 <html>
     <head>
-        <title>SeuTitulo</title>
+        <meta charset="utf-8">
+        <link rel="icon" href="assets/img/favicon.png" />
+        <title>R-Code</title>
     </head>
 
     <frameset rows="100%,*" framespacing="0" frameborder="no" border="0">
@@ -8,4 +10,3 @@
     </frameset>
     <noframes></noframes>
 </html>
-

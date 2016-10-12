@@ -1,9 +1,10 @@
 <?
     session_start();
-    require_once($_SESSION["palestra"]["controller"]);
+    require_once("../../controller/palestra/palestraController.php");
     $config = new Config();
     require_once($config->getMenu());
     $controllerPalestra = new PalestraController();
+    $config->verificarLogin("admin","user");
 ?>
 <section class="conteudo palestra cadastro">
     <?=$controllerPalestra->listarPalestras();?>

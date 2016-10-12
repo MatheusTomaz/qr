@@ -4,6 +4,7 @@
     $config = new Config();
     require_once($config->getMenu());
     $controller = new PessoasController();
+    $config->verificarLogin("admin","user");
 ?>
 <section class="conteudo pessoas cadastro">
     <div class="row">
@@ -40,7 +41,7 @@
                             <div class="col-xs-12 col-md-3">
                                 <div class="form-group">
                                     <label for="cpf">CPF</label>
-                                    <input type="text" class="form-control" required name="cpf" id="cpf" placeholder="CPF">
+                                    <input type="text" class="form-control" onkeypress="return onlyNumber(event)" maxlength="14" required name="cpf" id="cpf" placeholder="CPF">
                                 </div>
                             </div>
 
@@ -58,6 +59,7 @@
         <?=$controller->listarPessoas();?>
 </section>
 <?=$config->getAssets("js","pessoas/pessoas.js");?>
+<?=$config->getAssets("js","config.js");?>
 <?
     require_once($config->getMenuRodape());
 ?>

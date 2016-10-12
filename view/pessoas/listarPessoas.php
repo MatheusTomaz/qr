@@ -4,6 +4,7 @@
     $config = new Config();
     require_once($config->getMenu());
     $controller = new PessoasController();
+    $config->verificarLogin("admin","user");
 ?>
 <section class="conteudo pessoas cadastro">
     <div class="row">

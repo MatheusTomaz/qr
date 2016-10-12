@@ -100,7 +100,7 @@
                                         <div class='col-xs-2'>
                                             <b>Grupo: </b>".$res["grupo"]."
                                         </div>
-                                        <div class='col-xs-1'>
+                                        <div class='col-xs-1 icones'>
                                             <div class='pull-right'>
                                                 <a href='#' onclick='excluir({$res['id']},{$res['evento_id']},\"" .$res['nome']."\");'>
                                                     <i class='fa fa-2x fa-close' data-toggle='tooltip' data-placement='top' title='Excluir Pessoa'></i>

@@ -4,8 +4,9 @@
     $config = new Config();
     require_once($config->getMenu());
     $controller = new ClienteController();
+    $config->verificarLogin("admin");
 ?>
-<section class="conteudo cliente cadastro">
+<section class="conteudo primeira-pagina cliente cadastro">
     <div class="row">
         <div class="col-xs-12">
             <div class="panel panel-default">

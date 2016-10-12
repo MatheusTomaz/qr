@@ -1,16 +1,10 @@
 <?
     session_start();
-    require_once($_SESSION["config"]);
-    require_once($_SESSION["evento"]["bean"]);
+    require_once("../../config/config.php");
+    require_once("../../bean/evento/eventoBean.php");
 
     Class EventoModel{
 
-        private $transacao;
-
-        function EventoModel(){
-            $fabricaConexao = new FabricaConexao();
-            $this->transacao = $fabricaConexao->getTransacao();
-        }
 
         function getEvento($campos, $tabela, $options=" "){
             $query = "SELECT $campos FROM $tabela $options";
@@ -30,23 +24,35 @@
 
         function removeEvento($id){
             $erro = 0;
+            $fabricaConexao = new FabricaConexao();
+            $pdo = $fabricaConexao->getTransacao();
+
             $query1 = "DELETE FROM participante_has_palestra WHERE palestra_evento_id = $id";
             $query2 = "DELETE FROM palestra WHERE evento_id = $id";
             $query3 = "DELETE FROM pessoas WHERE evento_id = $id";
             $query4 = "DELETE FROM participante WHERE evento_id = $id";
             $query5 = "DELETE FROM evento WHERE id = $id";
-            if (!mysqli_query($this->transacao, $query1)) $erro++;
-            if (!mysqli_query($this->transacao, $query2)) $erro++;
-            if (!mysqli_query($this->transacao, $query3)) $erro++;
-            if (!mysqli_query($this->transacao, $query4)) $erro++;
-            if (!mysqli_query($this->transacao, $query5)) $erro++;
+
+            if (!$pdo->query($query1)) $erro++;
+            if (!$pdo->query($query2)) $erro++;
+            if (!$pdo->query($query3)) $erro++;
+            if (!$pdo->query($query4)) $erro++;
+            if (!$pdo->query($query5)) $erro++;
+
             if ($erro == 0){
-                mysqli_commit($this->transacao);
-                return true;
+                $pdo->commit();
+                $status = true;
             } else {
-                mysqli_rollback($this->transacao);
-                return false;
+                $pdo->rollback();
+                $status = false;
             }
+
+            return $status;
+        }
+
+        function aprovarEvento($id){
+            $query ="UPDATE evento SET status = 1 WHERE id = $id";
+            return mysql_query($query);
         }
 
         function getUltimoEvento($id){

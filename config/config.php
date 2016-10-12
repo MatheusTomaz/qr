@@ -14,6 +14,7 @@
 
         function Config($page = NULL){
             session_start();
+            // print_r($_SERVER);
             if($page == "login"){
                 $this->path = "/sisqrcode/";
             }else{
@@ -29,6 +30,51 @@
             $this->getPath("relatorios");
             $this->getPath("dashboard");
             $this->getPath("usuario");
+            $this->getPath("cracha");
+            $this->getPath("qrcode");
+
+        }
+
+        function ultimaPagina(){
+
+            if($_SERVER['REQUEST_URI'] != '/sisqrcode/view/dashboard/dashboard.php' &&
+               $_SERVER['REQUEST_URI'] != '/sisqrcode/view/cliente/listarCliente.php'){
+                $caminho = explode("?", $_SERVER["REQUEST_URI"]);
+                $contAux = 0;
+                foreach ($_SESSION["historico"] as $primeiroCaminho) {
+                    if($primeiroCaminho == $_SERVER["REQUEST_URI"]){
+                        break;
+                    }
+                    $contAux++;
+                }
+                for ($cont=$contAux; $cont>=0; $cont--) {
+                    if($cont != 0){
+                        $volta = explode("?",$_SESSION["historico"][$cont-1]);
+                        if($caminho[0] != $volta[0]){
+                            $caminhoVoltar = $_SESSION["historico"][$cont-1];
+                            break;
+                        }
+                    }
+                }
+                $btnVoltar = "<li>
+                            <a href=".$caminhoVoltar."><i class='fa fa-chevron-left'></i>&nbsp;&nbsp;&nbsp; Voltar</a>
+                        </li>";
+                return $btnVoltar;
+            }
+// [HTTP_REFERER]
+        }
+
+        function historicoPaginas(){
+            if($_SERVER['REQUEST_URI'] == '/sisqrcode/view/dashboard/dashboard.php'){
+                unset($_SESSION["historico"]);
+            }
+            $pos = strpos($_SERVER["REQUEST_URI"], "&");
+            if($_SERVER["REQUEST_URI"] != $_SESSION["historico"][count($_SESSION["historico"])-1]){
+                if ($pos === false) {
+                    $_SESSION["historico"][] = $_SERVER["REQUEST_URI"];
+                }
+            }
+            // $_SESSION["historico"] =
         }
 
         function getPath($param){
@@ -80,15 +126,22 @@
                 $path = $this->path."assets/img/".$file;
                 return '<link rel="icon" href="'.$path.'" />';
             }
+            if($type == "|img"){
+                $path = $this->path."assets/img/".$file;
+                return $path;
+            }
         }
 
-        function verificarLogin($param = "NULL") {
-            if($param == "login"){
-                if(isset($_SESSION["login"])){
+        function verificarLogin($param1, $param2 = "NULL") {
+            if($_SERVER["SCRIPT_NAME"]=="/sisqrcode/view/login.php"){
+                if(isset($_SESSION["login"]) && $_SESSION["grupo"]=="user"){
                     header('Location: /sisqrcode/view/dashboard/dashboard.php');
                 }
             }else{
-                if (!isset($_SESSION["login"])) {
+                if($param1 != $_SESSION["grupo"] && $param2 != $_SESSION["grupo"]){
+                    header('Location: /sisqrcode/view/dashboard/dashboard.php');
+                }
+                if (!isset($_SESSION["login"]) AND !isset($_SESSION["cliente"]["controller"])) {
                     header('Location: /sisqrcode/view/login.php');
                 }
             }

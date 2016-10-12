@@ -92,7 +92,7 @@
                                                 <b>Eventos:</b> ".$this->buscarQtdEventoCliente($res["id"])."
                                             </div>
                                             <div class='col-md-3 col-xs-12'>
-                                                <button class='btn btn-default pull-right' onclick='#'>Ver Eventos</button>
+                                                <button class='btn btn-default pull-right' onclick=\"location.href='".$_SESSION["evento"]["view"]["listar"]."?id=".$res["id"]."'\">Ver Eventos</button>
                                             </div>
                                         </div>
                                     </div>

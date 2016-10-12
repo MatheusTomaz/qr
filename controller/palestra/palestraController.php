@@ -1,6 +1,7 @@
 <?
     session_start();
-    require_once($_SESSION["palestra"]["model"]);
+    require_once("../../model/palestra/palestraModel.php");
+    require_once("../../controller/relatorio/relatorioController.php");
 
     class PalestraController{
 
@@ -22,8 +23,11 @@
                 $this->bean->setQtdParticipante($_POST["qtdParticipante"]);
                 $this->cadastrarPalestra();
             }
-            if(isset($_GET["excluir"])){
-                $this->excluirPalestra($_GET["excluir"]);
+            if(isset($_GET["excluirPalestra"])){
+                $this->excluirPalestra($_GET["excluirPalestra"]);
+            }
+            if(isset($_GET["gerarRelatorio"])){
+                $this->gerarRelatorio($_GET["gerarRelatorio"],$_GET["id"]);
             }
             $this->finalizarPalestra();
         }
@@ -52,8 +56,23 @@
             $this->alert = $this->gerarAlert($tipo,$texto);
         }
 
-        function verificaPalestraAberta($id){
-            $row = $this->modelPalestra->getPalestra("*","participante_has_palestra","WHERE palestra_id = ".$id." AND palestra_evento_id = ".$this->eventoId);
+        function verificaEventoFinalizado($id){
+            $row = $this->modelPalestra->getPalestra("*","palestra","WHERE evento_id = ".$id);
+            $status = false;
+            if(mysql_num_rows($row)>0){
+                $status = true;
+                while($res = mysql_fetch_array($row)){
+                    if($res["status"]==0){
+                        $status = false;
+                    }
+                }
+            }
+            return $status;
+        }
+
+        function verificaPalestraAberta($id,$evento = " "){
+            $row = $this->modelPalestra->getPalestra("*","participante_has_palestra","WHERE palestra_id = ".$id." AND palestra_evento_id = ".$this->eventoId.$evento);
+            $status = false;
             if(mysql_num_rows($row)>0){
                 $status = false;
                 while($res = mysql_fetch_array($row)){
@@ -63,6 +82,37 @@
                 }
             }
             return $status;
+        }
+
+        function listarPalestrasCliente($id){
+            $lista = array();
+            $verifica = true;
+            $row = $this->modelPalestra->getPalestra("*","palestra","WHERE evento_id = ".$id." AND status = 0");
+            if(mysql_num_rows($row)>0){
+                while($res = mysql_fetch_array($row)){
+                    if(!$this->verificaPalestraAberta($res['id'], $res['evento_id']) && $this->palestrasSParticipante($res['id'])){
+                        $lista[] = $res;
+                        // print_r($row);
+                        $verifica = false;
+                    }
+                }
+            }
+            if($verifica){
+                $lista[] = array('nome' => 'Sem Palestras', 'id' => 0);
+            }
+
+            $json = json_encode( $lista );
+            echo $json;
+        }
+
+        function palestrasSParticipante($id){
+            $qtdParticipante = $this->modelPalestra->getPalestra("*","participante_has_palestra","WHERE palestra_id = ".$id);
+            $qtdParticipante = mysql_num_rows($qtdParticipante);
+            if($qtdParticipante > 0){
+                return true;
+            }else{
+                return false;
+            }
         }
 
         function finalizarPalestra(){
@@ -84,19 +134,15 @@
             $palestra = mysql_fetch_array($row2);
             $row2 = $this->modelPalestra->getPalestra("*","palestra","WHERE id = ".$id." AND evento_id = ".$this->eventoId);
             if($palestra["status"]==0){
-                if($this->verificaPalestraAberta($id)){
-                    if(mysql_num_rows($row) > 0){
-                        if(mysql_num_rows($row2) > 0){
-                            if($this->modelPalestra->removePalestra($id,$this->eventoId)){
-                                $tipo = "success";
-                                $texto = "Palestra removida com sucesso!";
-                            }else{
-                                $tipo = "danger";
-                                $texto = "Não foi possível remover Palestra";
-                            }
+                if(!$this->verificaPalestraAberta($id)){
+                    if(mysql_num_rows($row2) > 0){
+                        $res = $this->modelPalestra->removePalestra($id,$this->eventoId);
+                        if($res){
+                            $tipo = "success";
+                            $texto = "Palestra removida com sucesso!";
                         }else{
                             $tipo = "danger";
-                            $texto = "Palestra não existe!";
+                            $texto = "Não foi possível remover Palestra";
                         }
                     }else{
                         $tipo = "danger";
@@ -116,22 +162,44 @@
         function listarPalestras(){
             $row2 = $this->modelPalestra->getPalestra("*","evento","WHERE id = ".$this->eventoId);
             $nomeEvento = mysql_fetch_array($row2);
-            $lista =   "<div class='col-xs-12'>
+            $lista =   "<div class='row'>
+            <div class='col-xs-12'>
                             <div class='panel panel-default'>
                                 <div class='panel-heading'>
-                                    Palestras Cadastradas ({$nomeEvento['nome']})";
+                                    <div class='row'>
+                                        <div class='col-xs-8'>
+                                            Palestras Cadastradas ({$nomeEvento['nome']})
+                                        </div>";
+
             if($_SERVER["SCRIPT_NAME"] == "/sisqrcode/view/palestra/listarPalestra.php"){
-                if(!$this->verificaEventoAberto($this->eventoId)){
-                    $lista .= "<div class='pull-right'>
-                                <a href='".$_SESSION["palestra"]["view"]["cadastro"]."?id={$_GET['id']}'>
-                                    <i class='fa fa-2x fa-plus' data-toggle='tooltip' data-placement='bottom' title='Cadastrar palestra'></i>
-                                </a>
-                            </div>";
+                if(!$this->verificaEventoFinalizado($this->eventoId)){
+                    $lista .=           "<div class='col-xs-4'>
+                                            <div class='row'>
+                                                <div class='col-xs-4'>
+                                                    <a href='".$_SESSION["palestra"]["view"]["cadastro"]."?id=".$this->eventoId."'>
+                                                        <i class='fa fa-2x fa-plus-square' data-toggle='tooltip' data-placement='top' title='Adicionar palestras'></i>
+                                                    </a>
+                                                </div>
+                                                <div class='col-xs-4'>
+                                                    <a href='".$_SESSION["pessoas"]["view"]["cadastro"]."?id=".$this->eventoId."'>
+                                                        <i class='fa fa-2x fa-group' data-toggle='tooltip' data-placement='top' title='Adicionar pessoas'></i>
+                                                    </a>
+                                                </div>
+                                                <div class='col-xs-4'>
+                                                    <a href='".$_SESSION["participante"]["view"]["cadastro"]."?id=".$this->eventoId."&tipo=todos'>
+                                                        <i class='fa fa-2x fa-user' data-toggle='tooltip' data-placement='top' title='Adicionar participantes'></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>";
                 }
             }
-            $lista .= "</div>
-                    </div>
-                </div>";
+
+            $lista .=                "</div>
+                                </div>
+                            </div>
+                        </div>";
+
             if($_SERVER["SCRIPT_NAME"] == "/sisqrcode/view/palestra/listarPalestra.php"){
                 $lista .= $this->alert;
             }
@@ -151,29 +219,32 @@
                                             <div class='col-xs-3'>
                                                 {$res['tipo']}
                                             </div>
-                                            <div class='col-xs-4'>
-                                                ".(($res["status"]==0) ? "
+                                            <div class='col-xs-4 icones'>
                                                 <div class='row'>
                                                     <div class='col-xs-3'>
-                                                        <a href='".$_SESSION["pessoas"]["view"]["cadastro"]."?id=".$nomeEvento["id"]."'>
-                                                                <i class='fa fa-2x fa-group' data-toggle='tooltip' data-placement='top' title='Adicionar pessoas'></i>
-                                                        </a>
+
                                                     </div>
                                                     <div class='col-xs-3'>
-                                                        <a href='".$_SESSION["participante"]["view"]["cadastro"]."?id=".$nomeEvento["id"]."'>
-                                                            <i class='fa fa-2x fa-user' data-toggle='tooltip' data-placement='top' title='Adicionar participantes'></i>
-                                                        </a>
+
                                                     </div>
+                                                    ".(($res["status"]==0) ? "
+
                                                     <div class='col-xs-3'>
                                                         <a href='#'>
                                                             <i class='fa fa-2x fa-gear' data-toggle='tooltip' data-placement='top' title='Editar Palestra'></i>
                                                         </a>
                                                     </div>
-                                                    ".($this->verificaPalestraAberta($res['id'])?"<div class='col-xs-3'></div>":"<div class='col-xs-3'>
-                                                    <a onclick='excluir({$res['id']},{$this->eventoId},\"" .$res['nome']."\");'>
-                                                        <i class='fa fa-2x fa-close' data-toggle='tooltip' data-placement='top' title='Excluir palestra'></i>
-                                                    </a></div>")."
-                                                </div>":"<span class='label label-danger pull-right'>Finalizada</span>")."
+                                                    ".($this->verificaPalestraAberta($res['id'])?"
+                                                        <div class='col-xs-3'>
+                                                            <span class='label label-success'>Aberta</span>
+                                                        </div>":"
+                                                        <div class='col-xs-3'>
+                                                            <a href='#' onclick='excluir({$res['id']},{$this->eventoId},\"" .$res['nome']."\");'>
+                                                            <i class='fa fa-2x fa-close' data-toggle='tooltip' data-placement='top' title='Excluir palestra'></i>
+                                                            </a>
+                                                        </div>"):"<div class='col-xs-3'>
+                                                <span class='label label-danger'>Finalizado</span></div>")."
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -210,8 +281,13 @@
                                 </div>
                             </div>";
             }
-            $lista .= "</div></div>";
+            $lista .= "</div></div></div>";
             return $lista;
+        }
+
+        function gerarRelatorio($idPalestra,$idEvento){
+            $relatorio = new RelatorioController();
+            $relatorio->gerarRelatorio($idPalestra,$idEvento);
         }
 
         function gerarAlert($tipo,$texto){

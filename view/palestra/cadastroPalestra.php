@@ -4,6 +4,7 @@
     $config = new Config();
     require_once($config->getMenu());
     $controllerPalestra = new PalestraController();
+    $config->verificarLogin("admin","user");
 ?>
 <section class="conteudo palestra cadastro">
     <div class="row">
@@ -40,7 +41,7 @@
                             <div class="col-xs-12 col-md-3">
                                 <div class="form-group">
                                     <label for="qtdParticipante">Nº de Participantes</label>
-                                    <input type="number" min="1" required class="form-control" name="qtdParticipante" id="qtdParticipante" placeholder="Nº de Participantes">
+                                    <input type="number" min="1" required class="form-control" onkeypress="return onlyNumber(event)" name="qtdParticipante" id="qtdParticipante" placeholder="Nº de Participantes">
                                 </div>
                             </div>
                         </div>
@@ -53,9 +54,12 @@
                 </div>
             </div>
         </div>
+    </div>
 
         <?=$controllerPalestra->listarPalestras();?>
 </section>
+<?=$config->getAssets("js","config.js");?>
+<?=$config->getAssets("js","palestra/palestra.js");?>
 <?
     require_once($config->getMenuRodape());
 ?>

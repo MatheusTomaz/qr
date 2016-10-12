@@ -1,7 +1,7 @@
 /* LOGIN */
 
 html, body{
-    background-color: #01579b;
+    background-color: #1287b9;
     height: 100%;
 }
 
@@ -14,10 +14,12 @@ body{
     border-radius:0;
 }
 
+
+
 button{
     border-radius:0 !important;
     width: 100%;
-    background-color: #01579b !important;
+    background-color: #1287b9 !important;
     color: white !important;
     margin-top: 10px;
     padding-top: 10px;
@@ -27,7 +29,7 @@ button{
 
 
 .panel{
-    height: 100%;
+    /* height: 100%; */
     border-radius: 0;
 }
 

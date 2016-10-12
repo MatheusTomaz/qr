@@ -4,7 +4,7 @@
     $config = new Config();
     require_once($config->getMenu());
     $controllerEvento = new EventoController();
-
+    $config->verificarLogin("admin","user");
 ?>
 <section class="conteudo evento cadastro">
     <div class="row">
@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <label for="logoEvento">Logo</label>
                                     <input type="file" name="logoEvento" id="logoEvento">
-                                    <p class="help-block">(.jpg, .png)(100x100)px</p>
+                                    <p class="help-block">(.jpg)(até 4mB) - (100x100)px ou proporcional </p>
                                 </div>
                             </div>
                         </div>
@@ -58,36 +58,6 @@
                                         <div class="row">
                                             <div class="col-xs-12">
                                                 <div class="panel-title">
-                                                    <input type='radio' onclick="selecionaModelo()" class="modeloCracha" required name='modeloCracha' id='modeloCracha' value='completo'/> Completo
-                                                    <hr>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-12 col-md-4 text-center">
-                                                <a href="#" class="thumbnail">
-                                                    <?=$config->getAssets("img","modeloCompletoCracha.png");?>
-                                                </a>
-                                            </div>
-                                            <div class="col-xs-12 col-md-4">
-                                                <div class="form-group">
-                                                    <label for="crachaEvento">Crachá</label>
-                                                    <input type="file" required name="crachaEvento" id="crachaEvento">
-                                                    <p class="help-block">(.jpg, .png)(100x100)px</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class='col-xs-12'>
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <div class="panel-title">
                                                     <input type='radio' onclick="selecionaModelo()" class="modeloCracha" required name='modeloCracha' id='modeloCracha' value='dividido'/> Dividido (Cabeçalho e Rodapé)
                                                     <hr>
                                                 </div>
@@ -96,22 +66,24 @@
                                         <div class="row">
                                             <div class="col-xs-12 col-md-4 text-center">
                                                 <a href="#" class="thumbnail">
-                                                    <?=$config->getAssets("img","modeloDivididoCracha.png");?>
+                                                    <?=$config->getAssets("img","modeloCompletoCracha.png");?>
+                                                    <img id="previaCabecalho" src="#"/>
+                                                    <img id="previaRodape" src="#"/>
                                                 </a>
                                             </div>
-                                            <div class="col-xs-12 col-md-8">
+                                            <div class="col-xs-12 col-md-4">
                                                 <div class="col-xs-12 col-md-12">
                                                     <div class="form-group">
                                                         <label for="cabecalhoCrachaEvento">Cabeçalho</label>
                                                         <input type="file" required name="cabecalhoCrachaEvento" id="cabecalhoCrachaEvento">
-                                                        <p class="help-block">(.jpg, .png)(100x100)px</p>
+                                                        <p class="help-block">(.jpg)(120x320)px ou proporcional</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12 col-md-12">
                                                     <div class="form-group">
                                                         <label for="rodapeCrachaEvento">Rodapé</label>
                                                         <input type="file" required name="rodapeCrachaEvento" id="rodapeCrachaEvento">
-                                                        <p class="help-block">(.jpg, .png)(100x100)px</p>
+                                                        <p class="help-block">(.jpg)(140x320)px ou proporcional</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -134,7 +106,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-xs-12 col-md-12 text-center">
-                                                (Alguma informação ou nenhuma)
+                                                Gera os QR Codes em etiquetas
                                             </div>
                                         </div>
                                     </div>
@@ -151,7 +123,8 @@
             </div>
         </div>
 </section>
-<?=$config->getAssets("js","evento/cadastroEvento.js");?>
+
 <?
     require_once($config->getMenuRodape());
 ?>
+<?=$config->getAssets("js","evento/cadastroEvento.js");?>

@@ -40,13 +40,18 @@ class loginController {
 		$res = $this->modelUsuario->buscarUsuario("*", "usuario", "WHERE login = '{$this->usuario->getLogin()}' AND senha = '{$this->usuario->getSenha()}'");
         $row = mysql_fetch_array($res);
             $_SESSION["idCliente"] = $row["id"];
+            $_SESSION["grupo"] = $row["grupo"];
 		if (mysql_num_rows($res) > 0) {
             $res = $this->modelUsuario->buscarUsuario("*", "cliente", "WHERE id = '{$row["cliente_id"]}'");
             $row = mysql_fetch_array($res);
 			$_SESSION["login"] = $this->usuario->getLogin();
             $_SESSION["senha"] = $this->usuario->getSenha();
             $_SESSION["nomeCliente"] = $row["nome"];
-			header("Location: dashboard/dashboard.php");
+            if($_SESSION['grupo']=="admin"){
+                header("Location: cliente/listarCliente.php");
+            }else{
+		    	header("Location: dashboard/dashboard.php");
+            }
 		} else {
 			$this->msg = "<div class='panel msg-erro'>Login e/ou Senha incorretos!</div>";
 		}

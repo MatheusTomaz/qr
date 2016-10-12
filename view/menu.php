@@ -1,8 +1,13 @@
 <?
     require_once '../../config/config.php';
     $config = new Config();
-    $config->verificarLogin();
+    $config->historicoPaginas();
 ?>
+
+<?=$config->verificaPath()?>
+<noscript>
+    <?=$config->alertNoJS();?>
+</noscript>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,12 +29,12 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="<?=$_SESSION["pathDashboard"];?>">Home</a></li>
-                        <li><a href="<?=$_SESSION["cliente"]["view"]["listar"];?>">Clientes</a></li>
-                        <li><a href="#">Presença</a></li>
-                        <li><a href="#">Relatórios</a></li>
+                        <?= (($_SESSION["grupo"] == "admin") ?
+                        "<li><a href='{$_SESSION["cliente"]["view"]["listar"]}''>Clientes</a></li>":
+                        "<li><a href='{$_SESSION["pathDashboard"]}'>Dashboard</a></li>");?>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
+                        <?=$config->ultimaPagina();?>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$_SESSION["nomeCliente"];?> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -42,5 +47,6 @@
                 </div>
             </div>
         </nav>
+
     </section>
 

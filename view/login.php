@@ -4,6 +4,10 @@
     require_once '../config/indexController.php';
     $login = new loginController();
 ?>
+<?=$config->verificaPath()?>
+<noscript>
+    <?=$config->alertNoJS();?>
+</noscript>
 <!DOCTYPE html>
 <html>
 <head>

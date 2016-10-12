@@ -1,6 +1,6 @@
 <?
     session_start();
-    require_once($_SESSION["participante"]["model"]);
+    require_once("../../model/participante/participanteModel.php");
 
     class ParticipanteController{
 
@@ -26,6 +26,9 @@
             }
             if(isset($_GET["excluirAll"])){
                 $this->excluirTodosParticipantes($_GET["excluirAll"]);
+            }
+            if(isset($_GET["participante"])){
+                $this->presencaParticipante($_GET["participante"],$_GET["id"],$_GET["palestra"]);
             }
         }
 
@@ -70,6 +73,19 @@
             $this->alert = $this->gerarAlert($tipo,$texto);
         }
 
+        function listarParticipantesCliente($id){
+            $lista = array();
+            $row = $this->modelParticipante->getParticipante("participante.id, participante.nome, participante.cpf, partPal.presenca","participante_has_palestra as partPal, participante","WHERE participante_id = id AND palestra_id = ".$id." ORDER BY participante.nome");
+            while($res = mysql_fetch_array($row)){
+                // die(print_r($row));
+                $lista[] = $res;
+                    // print_r($row);
+            }
+
+            $json = json_encode( $lista );
+            echo $json;
+        }
+
         function verificarCampos(){
             if(isset($_POST["palestrasParticipante"])){
                 foreach ($_POST["palestrasParticipante"] as $palestras) {
@@ -99,6 +115,10 @@
                 }
             }
             return $status;
+        }
+
+        function presencaParticipante($id,$evento,$palestra){
+            $this->modelParticipante->presencaParticipante($id,$evento,$palestra);
         }
 
         function listarPalestras(){
@@ -248,7 +268,8 @@
                                         <th class='text-center'>".$res["id"]."</th>
                                         <td>".$res["nome"]."</td>
                                         <td class='text-center'>".$res["cpf"]."</td>
-                                        <td class='text-center'><span class='label label-".(($res["presenca"]==1) ? "success'>Presente" : "danger'>Ausente")."</span></td>
+                                        <td class='text-center'><span id='pt{$res['id']}' class='label label-".(($res["presenca"]==1) ? "success'>Presente" : "danger'>Ausente")."</span></td>
+
                                     </tr>";
                     }
                     $lista .= "</tbody>
@@ -282,7 +303,7 @@
                                                 <div class='col-xs-3'>
                                                     <b>CPF</b>: ".$res["cpf"]."
                                                 </div>
-                                                <div class='col-xs-3'>
+                                                <div class='col-xs-3 icones'>
                                                     <div class='pull-right'>
                                                         ".($status ? " ":"<a href='#' onclick='excluir({$res['id']},{$this->eventoId},\"" .$res['nome']."\")'>
                                                             <i class='fa fa-2x fa-close' data-toggle='tooltip' data-placement='top' title='Excluir participante'></i>

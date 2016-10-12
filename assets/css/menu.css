@@ -10,6 +10,37 @@ button{
     border-radius:0 !important;
 }
 
+.btn-voltar .btn-default{
+    background: #1287b9;
+    color: white;
+    border: #1287b9;
+    height: 33px;
+    border-radius: 0 !important;;
+}
+
+.btn-voltar .btn-default:hover{
+    background: #1287b9;
+    color: white;
+    border: #1287b9;
+    height: 33px;
+    border-radius: 0 !important;
+}
+
+#previaCabecalho{
+    position: absolute;
+    top: 5px;
+    height: 60px;
+    display: none;
+}
+
+#previaRodape{
+    position: absolute;
+    bottom: 5px;
+    height: 92px;
+    display: none;
+}
+
+
 /* MENU */
 
 .menu{
@@ -19,10 +50,10 @@ button{
 }
 
 .navbar{
-    background-color: #01579b;
+    background-color: #1287b9;
     color: white;
     border-radius: 0;
-    border: 1px #01579b solid;
+    border: 1px #1287b9 solid;
 
 }
 
@@ -70,6 +101,10 @@ button{
     margin-bottom: 20px;
 }
 
+.icones a i{
+    color: #1287b9;
+}
+
 .conteudo .panel-collapse .panel-body .col-xs-12,
 .conteudo .panel-collapse .panel-body .col-xs-8,
 .conteudo .panel-collapse .panel-body .col-xs-4{
@@ -77,9 +112,36 @@ button{
 }
 
 .conteudo .panel-collapse .panel-body .btn-default{
-    background: #01579b;
+    background: #1287b9;
     color: white;
-    border: #01579b;
+    border: #1287b9;
+    height: 35px;
+}
+
+.conteudo .tab-content{
+    margin: 0;
+}
+
+.conteudo .nav.nav-pills{
+    margin-bottom: 20px;
+}
+
+.conteudo .nav-pills > li.active > a, .conteudo .nav-pills > li.active > a:focus, .conteudo .nav-pills > li.active > a:hover {
+    background-color: #1287b9;
+    color: #fff;
+    border-radius: 0;
+}
+
+.conteudo .nav-pills > li > a,
+.conteudo .nav-pills > li > a:focus,
+.conteudo .nav-pills > li > a:hover {
+    background-color: #fff;
+    color: #1287b9;
+    border-radius: 0;
+}
+
+.conteudo .nav-pills > li > a {
+    border-radius: 0;
 }
 
 
@@ -97,14 +159,23 @@ button{
 
 
 .cadastro .panel > .panel-heading{
-    background-color: #01579b;
+    background-color: #1287b9;
     border-radius: 0;
     padding-top: 20px;
     padding-bottom: 20px;
-    border: 1px #01579b solid;
+    border: 1px #1287b9 solid;
     color: #fff;
     font-weight: bold;
 }
+
+.cadastro .panel > .panel-heading a{
+    color: #fff;
+}
+
+.cadastro .panel > .panel-heading a:hover{
+    color: #fff;
+}
+
 
 .cadastro .panel > .panel-body{
     border-radius: 0;
@@ -112,7 +183,7 @@ button{
 
 .cadastro button[type="submit"]{
     width: 100%;
-    background-color: #01579b;
+    background-color: #1287b9;
     color: white;
     margin-top: 10px;
     padding-top: 10px;
@@ -217,6 +288,19 @@ button{
 }
 
 /* FIM LISTAR PARTICIPANTE PALESTRA */
+
+/* CRACHA */
+
+.title-body{
+    color: #1287b9;
+}
+
+.panel-cracha{
+    background: #1287b9;
+    padding: 0;
+}
+
+/* FIM CRACHA */
 
 /* RODAPE */
 

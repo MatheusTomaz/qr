@@ -4,6 +4,7 @@
     $config = new Config();
     require_once($config->getMenu());
     $controller = new ClienteController();
+    $config->verificarLogin("admin");
 ?>
 <section class="conteudo cliente cadastro">
     <div class="row">
@@ -29,7 +30,7 @@
                             <div class="col-xs-12 col-md-4">
                                 <div class="form-group">
                                     <label for="cnpjCliente">CNPJ</label>
-                                    <input type="text" required class="form-control" name="cnpjCliente" id="cnpjCliente" placeholder="CNPJ">
+                                    <input type="text" required class="form-control" onkeypress="return onlyNumber(event)" maxlength="14" name="cnpjCliente" id="cnpjCliente" placeholder="CNPJ">
                                 </div>
                             </div>
                         </div>
@@ -97,6 +98,7 @@
             </div>
         </div>
 </section>
+<?=$config->getAssets("js","config.js");?>
 <?
     require_once($config->getMenuRodape());
 ?>

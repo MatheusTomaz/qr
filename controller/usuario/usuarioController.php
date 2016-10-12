@@ -24,7 +24,7 @@
         function buscarUsuario(){
             $row = $this->model->buscarUsuario("*","usuario","WHERE cliente_id = {$this->bean->getId()}");
             $res = mysql_fetch_array($row);
-            print $res["login"];
+            // print $res["login"];
             if(mysql_num_rows($row)>0){
                 $this->bean->setLogin($res["login"]);
                 $this->bean->setSenha($res["senha"]);
@@ -44,7 +44,6 @@
             }
             // $bean->setObs($_POST["nomeCliente"]);
             if(isset($_POST["usuarioCliente"])){
-                print "oi";
                 $this->bean->setLogin($_POST["usuarioCliente"]);
                 $this->bean->setSenha($_POST["senhaUsuario"]);
                 $this->bean->setGrupo($_POST["grupoUsuario"]);

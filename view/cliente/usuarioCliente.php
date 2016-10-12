@@ -6,7 +6,9 @@
     require_once($config->getMenu());
     $controllerUsuario = new UsuarioController();
     $controllerCliente = new ClienteController();
+    $config->verificarLogin("admin");
 ?>
+
 <section class="conteudo cliente cadastro">
     <div class="row">
         <div class="col-xs-12">

@@ -1,7 +1,7 @@
 <?
     session_start();
-    require_once($_SESSION["config"]);
-    require_once($_SESSION["participante"]["bean"]);
+    require_once("../../config/config.php");
+    require_once("../../bean/participante/participanteBean.php");
 
     Class ParticipanteModel{
 
@@ -17,6 +17,11 @@
                              '{$values->getCpf()}',
                              '{$values->getEventoId()}')";
                              // echo($query);
+            return mysql_query($query);
+        }
+
+        function presencaParticipante($id,$evento,$palestra){
+            $query = "UPDATE participante_has_palestra SET presenca = 1, data_criado = '".date("Y-m-d H:i:s",time())."' WHERE participante_id= $id AND palestra_id = $palestra AND palestra_evento_id = $evento";
             return mysql_query($query);
         }
 
