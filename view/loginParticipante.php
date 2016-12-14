@@ -1,8 +1,8 @@
 <?
     require_once '../config/config.php';
     $config = new Config("login");
-    require_once '../config/indexController.php';
-    $login = new loginController();
+    require_once '../config/indexParticipanteController.php';
+    $login = new loginParticipanteController();
 ?>
 <?=$config->verificaPath()?>
 <noscript>
@@ -25,10 +25,10 @@
     <div class="col-md-offset-3 col-md-6 col-xs-12">
         <div class="panel panel-default">
             <div class="panel-body">
-                <form action="login.php" method="POST">
+                <form action="loginParticipante.php" method="POST">
                     <div class="form-group">
-                        <label for="login">Login</label>
-                        <input type="text" class="form-control" id="login" name="login" placeholder="Login">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="Email">
                     </div>
                     <div class="form-group">
                         <label for="senha">Senha</label>

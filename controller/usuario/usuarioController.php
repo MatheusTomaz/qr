@@ -1,10 +1,10 @@
 <?
     session_start();
-    require_once($_SESSION["usuario"]["model"]);
+    require_once("../../model/usuario/usuarioModel.php");
 
     Class UsuarioController{
 
-        private $bean, $model, $button, $alterar;
+        private $bean, $model, $button, $alterar, $login, $senha;
 
         function UsuarioController(){
             $this->bean = new UsuarioBean();
@@ -26,10 +26,14 @@
             $res = mysql_fetch_array($row);
             // print $res["login"];
             if(mysql_num_rows($row)>0){
+                $this->login = "<input type='text' required class='form-control' name='usuarioCliente' id='usuarioCliente' placeholder='Usuário' value='{$res["login"]}'>";
+                $this->senha = "<input type='password' required class='form-control' name='senhaUsuario' id='senhaUsuario' placeholder='Senha' value='{$res["senha"]}'>";
                 $this->bean->setLogin($res["login"]);
                 $this->bean->setSenha($res["senha"]);
                 return true;
             }else{
+                $this->login = "<input type='text' required class='form-control' name='usuarioCliente' id='usuarioCliente' placeholder='Usuário'>";
+                $this->senha = "<input type='password' required class='form-control' name='senhaUsuario' id='senhaUsuario' placeholder='Senha'>";
                 return false;
             }
         }
@@ -104,6 +108,14 @@
 
         function getLogin(){
             return $this->bean->getLogin();
+        }
+
+        function getLoginCampo(){
+            return $this->login;
+        }
+
+        function getSenhaCampo(){
+            return $this->senha;
         }
 
         function getSenha(){

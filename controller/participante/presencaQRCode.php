@@ -4,11 +4,10 @@
     $objData = json_decode($data);
     // Como objData passa a ser um objeto, vamos capturar apenas o parametro que queremos
     // Conecta no banco
-    $host     = "localhost";
+    $host     = "bd-sisqrcode.mysql.uhserver.com";
     $dbname   = "bd_sisqrcode";
-    $usuario  = "root";
-    $password = "graomestre10";
-
+    $usuario  = "roboticajr";
+    $password = "EmpRobJr16@22@12";
     $erro = 0;
 
     $conexao  = mysql_connect($host, $usuario, $password) or die("Não foi possível conectar-se com o banco de dados");

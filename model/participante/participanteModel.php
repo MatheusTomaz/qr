@@ -13,10 +13,10 @@
 
         function setParticipante($values){
             $query = "INSERT INTO participante (nome,cpf,evento_id)
-                      VALUES('{$values->getNome()}',
+                      VALUES(\'{$values->getNome()}',
                              '{$values->getCpf()}',
                              '{$values->getEventoId()}')";
-                             // echo($query);
+                             echo($query."/".$values->getEventoId());
             return mysql_query($query);
         }
 

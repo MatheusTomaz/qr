@@ -1,9 +1,9 @@
 <?php
 
-// $host     = "forro.ufla.br";
-// $dbname   = "bd_roboticajr";
-// $usuario  = "admin_bdrobotica";
-// $password = "BdKwy036";
+// $host     = "bd-sisqrcode.mysql.uhserver.com";
+// $dbname   = "bd_sisqrcode";
+// $usuario  = "roboticajr";
+// $password = "EmpRobJr16@22@12";
 
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Origin: http://url:8080");

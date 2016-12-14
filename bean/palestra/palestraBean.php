@@ -8,6 +8,7 @@
         private $qtdParticipante;
         private $eventoId;
 
+
         public function getEventoId(){
             return $this->eventoId;
         }

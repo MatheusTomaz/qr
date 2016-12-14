@@ -1,8 +1,8 @@
 <?
     session_start();
-    require_once($_SESSION["cracha"]["model"]);
-    require_once($_SESSION["evento"]["bean"]);
-    require_once($_SESSION["qrcode"]["controller"]);
+    require_once("../../model/cracha/crachaModel.php");
+    require_once("../../bean/evento/eventoBean.php");
+    require_once("../../controller/qrcode/qrcodeController.php");
 
     Class CrachaController{
 
@@ -120,18 +120,31 @@
                     <div class='panel-body panel-cracha'>
                         <div class='panel panel-default'>
                             <div class='panel-body title-body'>
-                                <b>Participantes</b>
-                                <div class='pull-right'>
-                                    <button class='btn btn-default' style='margin-top:-8px;' type='button' onclick='checkPart()'>
-                                        Selecionar todos
-                                    </button>
+                                <div class='row'>
+                                    <div class='col-xs-8'>
+                                        <b>Participantes</b>
+                                    </div>
+                                    <div class='col-xs-2'>
+                                        Filtros: <a href='?id={$_GET['id']}&filtro=nome'>Nome</a> |
+                                        <a href='?id={$_GET['id']}&filtro=identificacao'>Inscrição</a>
+                                    </div>
+                                    <div class='col-xs-2'>
+                                        <button class='btn btn-default pull-right' style='margin-top:-8px;' type='button' onclick='checkPart()'>
+                                            Selecionar todos
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class='col-xs-12'>
                             <form name='formCrachaParticipantes'>
                             <div class='panel-group'>";
-            $row = $this->modelCracha->getCracha("*","participante", "WHERE evento_id = $id ORDER BY nome");
+                            if($_GET['filtro']=='identificacao'){
+                                $option = 'id';
+                            }else{
+                                $option = 'nome';
+                            }
+            $row = $this->modelCracha->getCracha("*","participante", "WHERE evento_id = $id ORDER BY $option");
             if(mysql_num_rows($row) > 0){
                 while($res = mysql_fetch_array($row)){
                     $this->lista .=   "<div class='panel panel-default'>

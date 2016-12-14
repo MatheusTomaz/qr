@@ -7,6 +7,8 @@
         private $idPalestra;
         private $cpf;
         private $eventoId;
+        private $email;
+        private $senha;
 
         public function getEventoId(){
             return $this->eventoId;
@@ -14,6 +16,22 @@
 
         public function setEventoId($eventoId){
             $this->eventoId = $eventoId;
+        }
+
+        public function getEmail(){
+            return $this->email;
+        }
+
+        public function setEmail($email){
+            $this->email = $email;
+        }
+
+        public function getSenha(){
+            return $this->senha;
+        }
+
+        public function setSenha($senha){
+            $this->senha = $senha;
         }
 
         public function getPalestraId(){

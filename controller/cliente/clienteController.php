@@ -1,7 +1,7 @@
 <?
     session_start();
-    require_once($_SESSION["cliente"]["model"]);
-    require_once($_SESSION["usuario"]["model"]);
+    require_once("../../model/cliente/clienteModel.php");
+    require_once("../../model/usuario/usuarioModel.php");
 
     Class ClienteController{
 

@@ -168,11 +168,25 @@
                                 <div class='panel-heading'>
                                     <div class='row'>
                                         <div class='col-xs-8'>
-                                            Palestras Cadastradas ({$nomeEvento['nome']})
+                                            Palestras ({$nomeEvento['nome']})
                                         </div>";
 
             if($_SERVER["SCRIPT_NAME"] == "/sisqrcode/view/palestra/listarPalestra.php"){
-                if(!$this->verificaEventoFinalizado($this->eventoId)){
+                if(isset($_SESSION['idParticipante'])){
+                    $lista .=           "<div class='col-xs-4'>
+                                            <div class='row'>
+                                                <div class='col-xs-3'>
+
+                                                </div>
+                                                <div class='col-xs-3'>
+
+                                                </div>
+                                                <div class='col-xs-3'>
+                                                    Presença
+                                                </div>
+                                            </div>
+                                        </div>";
+                }else if(!$this->verificaEventoFinalizado($this->eventoId)){
                     $lista .=           "<div class='col-xs-4'>
                                             <div class='row'>
                                                 <div class='col-xs-4'>
@@ -210,6 +224,8 @@
                 while($res = mysql_fetch_array($row)){
                     $qtdParticipante = $this->modelPalestra->getPalestra("*","participante_has_palestra","WHERE palestra_id = ".$res['id']);
                     $qtdParticipante = mysql_num_rows($qtdParticipante);
+                    $presencaParticipante = $this->modelPalestra->getPalestra("*","participante_has_palestra","WHERE palestra_id = ".$res['id']." AND participante_id = ".$_SESSION['idParticipante']);
+                    $presencaParticipante = ($presencaParticipante['presenca']? "<span class='label label-success'>Presente</span>":"<span class='label label-danger'>Ausente</span>");
                     $lista .=   "<div class='panel panel-default'>
                                     <div class='panel-body'>
                                         <div class='row'>
@@ -218,7 +234,7 @@
                                             </div>
                                             <div class='col-xs-3'>
                                                 {$res['tipo']}
-                                            </div>
+                                            </div>".(!isset($_SESSION['idParticipante'])?"
                                             <div class='col-xs-4 icones'>
                                                 <div class='row'>
                                                     <div class='col-xs-3'>
@@ -245,9 +261,23 @@
                                                         </div>"):"<div class='col-xs-3'>
                                                 <span class='label label-danger'>Finalizado</span></div>")."
                                                 </div>
-                                            </div>
+                                            </div>":"
+                                            <div class='col-xs-4 icones'>
+                                                <div class='row'>
+                                                    <div class='col-xs-3'>
+
+                                                    </div>
+                                                    <div class='col-xs-3'>
+
+                                                    </div>
+                                                    <div class='col-xs-3'>
+                                                        {$presencaParticipante}
+                                                    </div>
+                                                </div>
+                                            </div>    ")."
                                         </div>
                                     </div>
+                                    ".(!isset($_SESSION['idParticipante'])?"
                                     <div id='collapse".$res["id"]."' class='panel-collapse collapse'>
                                         <div class='panel-body'>
                                             <div class='row'>
@@ -271,7 +301,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>":" ")."
                                 </div>";
                 }
             }else{

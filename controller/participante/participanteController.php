@@ -56,18 +56,15 @@
                             }else{
                                 $tipo = "danger";
                                 $texto = "Não foi possível cadastrar participante na palestra {$palestra['nome']}!";
-                                break;
                             }
                         }else{
                             $tipo = "danger";
                             $texto .= "\nNão há mais vaga na palestra ".$palestra['nome']."!";
-                            break;
                         }
                     }
                 }else{
                     $tipo = "danger";
                         $texto = "Erro ao cadastrar! Verifique se os campos estão preenchidos corretamente!";
-                        break;
                 }
             }
             $this->alert = $this->gerarAlert($tipo,$texto);
@@ -284,9 +281,11 @@
                 $lista .= "</div></form>
                         </div>";
             }else{
-                $row = $this->modelParticipante->getParticipante("*","participante","WHERE evento_id = ".$this->eventoId);
+                $row = $this->modelParticipante->getParticipante("*","participante_has_evento","WHERE evento_id = ".$this->eventoId);
                 if(mysql_num_rows($row) > 0){
-                    while($res = mysql_fetch_array($row)){
+                    while($resposta = mysql_fetch_array($row)){
+                        $row2 = $this->modelParticipante->getParticipante("*","participante","WHERE id = ".$resposta['participante_id']);
+                        $res = mysql_fetch_array($row2);
                         $status = $this->verificaParticipantePresenca($res['id']);
                         $lista .=   "<div class='panel panel-default'>
                                         <div class='panel-body'>
@@ -323,16 +322,12 @@
                                 $infoPalestraRow = mysql_fetch_array($infoPalestraRow);
                                 $lista .=   "<li class='list-group-item'>
                                                 ".$infoPalestraRow["nome"]."
+                                                <div class='pull-right'>
+                                                    <span id='pt{$res['id']}' class='label label-".(($palRow["presenca"]==1) ? "success'>Presente" : "danger'>Ausente")."</span></td>
+                                                </div>
                                             </li>";
                             }
                             $lista .=  "</ul>
-                                        <div class='row'>
-                                            <div class='col-xs-12'>
-                                                <div class='pull-right'>
-                                                    <button class='btn btn-default' type='button'>Gerar Crachá</button>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>";

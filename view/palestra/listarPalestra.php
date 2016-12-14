@@ -4,7 +4,7 @@
     $config = new Config();
     require_once($config->getMenu());
     $controllerPalestra = new PalestraController();
-    $config->verificarLogin("admin","user");
+    $config->verificarLogin("admin","user", "part");
 ?>
 <section class="conteudo palestra cadastro">
     <?=$controllerPalestra->listarPalestras();?>

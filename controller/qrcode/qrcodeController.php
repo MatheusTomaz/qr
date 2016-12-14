@@ -1,6 +1,6 @@
  <?php
 require_once ('../../assets/tcpdf/tcpdf.php');
-require_once ($_SESSION["cracha"]["model"]);
+require_once ("../../model/cracha/crachaModel.php");
 Class QRCodeController {
 
     private $cont,$somax,$somay,$conty;

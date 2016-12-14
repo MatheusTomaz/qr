@@ -1,6 +1,6 @@
 <?
     session_start();
-    require_once($_SESSION["pessoas"]["model"]);
+    require_once("../../model/pessoas/pessoasModel.php");
 
     class PessoasController{
 

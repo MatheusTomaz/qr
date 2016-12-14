@@ -1,7 +1,7 @@
 <?
     session_start();
-    require_once($_SESSION["usuario"]["controller"]);
-    require_once($_SESSION["cliente"]["controller"]);
+    require_once("../../controller/usuario/usuarioController.php");
+    require_once("../../controller/cliente/clienteController.php");
     $config = new Config();
     require_once($config->getMenu());
     $controllerUsuario = new UsuarioController();
@@ -45,13 +45,13 @@
                             <div class="col-xs-12 col-md-8">
                                 <div class="form-group">
                                     <label for="usuarioCliente">Login</label>
-                                    <input type="text" required class="form-control" name="usuarioCliente" id="usuarioCliente" placeholder="Usuário" value="<?=$controllerUsuario->getLogin();?>">
+                                    <?=$controllerUsuario->getLoginCampo();?>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-4">
                                 <div class="form-group">
                                     <label for="senhaUsuario">Senha</label>
-                                    <input type="password" required class="form-control" name="senhaUsuario" id="senhaUsuario" placeholder="Senha" value="<?=$controllerUsuario->getSenha();?>">
+                                    <?=$controllerUsuario->getSenhaCampo();?>
                                 </div>
                             </div>
                         </div>

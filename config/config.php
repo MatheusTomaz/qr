@@ -132,14 +132,22 @@
             }
         }
 
-        function verificarLogin($param1, $param2 = "NULL") {
+        function verificarLogin($param1, $param2 = "NULL", $param3 = "NULL") {
             if($_SERVER["SCRIPT_NAME"]=="/sisqrcode/view/login.php"){
                 if(isset($_SESSION["login"]) && $_SESSION["grupo"]=="user"){
                     header('Location: /sisqrcode/view/dashboard/dashboard.php');
                 }
+                if(isset($_SESSION["login"]) && $_SESSION["grupo"]=="part"){
+                    header('Location: /sisqrcode/view/participante/dashboard.php');
+                }
             }else{
-                if($param1 != $_SESSION["grupo"] && $param2 != $_SESSION["grupo"]){
-                    header('Location: /sisqrcode/view/dashboard/dashboard.php');
+                if($param1 != $_SESSION["grupo"] && $param2 != $_SESSION["grupo"] && $param3 != $_SESSION["grupo"]){
+                    if($_SESSION["grupo"]=="part"){
+                        header('Location: /sisqrcode/view/participante/dashboard.php');
+                    }
+                    if($_SESSION["grupo"]=="user"){
+                        header('Location: /sisqrcode/view/dashboard/dashboard.php');
+                    }
                 }
                 if (!isset($_SESSION["login"]) AND !isset($_SESSION["cliente"]["controller"])) {
                     header('Location: /sisqrcode/view/login.php');

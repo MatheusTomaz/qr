@@ -38,4 +38,8 @@ button{
     width: 100px;
 }
 
+.loginParticipante button{
+    height: 200px;
+}
+
 /* FIM LOGIN */
