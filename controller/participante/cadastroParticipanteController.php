@@ -25,11 +25,18 @@
         $json[] = array('cadastrou' => 'false', 'msg' => 'Você já possui cadastro!');
     }else{
 
-        $query = "INSERT INTO participante (nome,cpf,email,senha)
+        $query = "INSERT INTO participante (nome,cpf,email,senha,telefone,categoria,RG,nacionalidade,estado,cidade,nascimento)
                       VALUES ('{$objData->nomeParticipante}',
                              '{$objData->cpfParticipante}',
                              '{$objData->emailParticipante}',
-                             '{$objData->senhaParticipante}')";
+                             '{$objData->senhaParticipante}',
+                             '{$objData->telefone}',
+                             '{$objData->categoria}',
+                             '{$objData->rg}',
+                             '{$objData->nacionalidade}',
+                             '{$objData->estado}',
+                             '{$objData->cidade}',
+                             '{$objData->nascimento}')";
         $row = mysql_query($query);
         if($row){
             $query2 = "SELECT * FROM participante WHERE cpf = '$objData->cpfParticipante'";
@@ -45,7 +52,7 @@
                 $json[] = array('cadastrou' => 'false', 'msg' => 'Erro! Verifique se os campos estão preenchidos corretamente!');
             }
         }else{
-            $json[] = array('cadastrou' => 'false', 'msg' => 'Erro no Banco!');
+            $json[] = array('cadastrou' => 'false', 'msg' => "Erro no Banco!");
         }
 
 

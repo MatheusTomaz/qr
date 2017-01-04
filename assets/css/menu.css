@@ -200,15 +200,15 @@ button{
 
 /* EVENTO */
 
-.dashboard .status-aguardando{
+.status-aguardando{
     color: orange;
 }
 
-.dashboard .status-aberto{
+.status-aberto{
     color:  green;
 }
 
-.dashboard .status-finalizado{
+.status-finalizado{
     color:  red;
 }
 

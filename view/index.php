@@ -23,7 +23,7 @@
         <?=$config->getAssets("img","brand.png");?>
     </div>
     <div class="col-md-offset-3 col-md-3 col-xs-12">
-        <button class="panel panel-default" onclick="window.location.href='login.php'">Organização</button>
+        <button class="panel panel-default" onclick="window.location.href='login.php'">Organizador</button>
     </div>
     <div class="col-md-3 col-xs-12">
         <button class="panel panel-default" onclick="window.location.href='loginParticipante.php'">Participante</button>

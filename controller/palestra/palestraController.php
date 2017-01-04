@@ -45,6 +45,109 @@
             return $status;
         }
 
+        function listarParticipantes(){
+            $row2 = $this->modelPalestra->getPalestra("*","evento","WHERE id = ".$this->eventoId);
+            $nomeEvento = mysql_fetch_array($row2);
+            $lista =   "
+                    <div class='row'>
+                        <div class='col-xs-12'>
+                            <div class='panel panel-default'>
+                                <div class='panel-heading'>
+                                    Participantes ({$nomeEvento['nome']})
+                                    <div class='pull-right'>
+                                        <button class='btn btn-default' style='margin-top:-8px;' type='button' onclick='checkPart()'>
+                                            Selecionar todos
+                                        </button>
+                                        <button class='btn btn-default' style='margin-top:-8px;' type='button' onclick='excluirAll(".$nomeEvento['id'].")' data-toggle='tooltip' data-placement='bottom' title='Excluir selecionados'>
+                                            <i class='fa fa-trash'></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>";
+            if($_SERVER["SCRIPT_NAME"] == "/sisqrcode/view/participante/listarParticipante.php"){
+                $lista .= $this->alert;
+            }
+            $lista .= " <div class='col-xs-12'>
+                            <form name='formParticipantes'>
+                                <div class='panel-group'>";
+            $row = $this->modelPalestra->getPalestra("*","participante_has_evento","WHERE evento_id = ".$this->eventoId);
+            if(mysql_num_rows($row) > 0){
+                while($resposta = mysql_fetch_array($row)){
+                    $row2 = $this->modelPalestra->getPalestra("*","participante","WHERE id = ".$resposta['participante_id']);
+                    $res = mysql_fetch_array($row2);
+                    $status = $this->verificaParticipantePresenca($res['id']);
+                    $lista .=   "   <div class='panel panel-default'>
+                                        <div class='panel-body'>
+                                            <div class='row'>
+                                                <div class='col-xs-1'>
+                                                    <input type='checkbox'
+                                                    ".($status ? "style='display:none'":"name='listaParticipante[]'").
+                                                    "participanteController.php  id='palestrasParticipante{$res['id']}' value='{$res["id"]}'>
+                                                </div>
+                                                <div class='col-xs-5'>
+                                                    <a data-toggle='collapse' data-parent='#accordion' href='#collapse".$res["id"]."'>".$res["nome"]."</a>
+                                                </div>
+                                                <div class='col-xs-3'>
+                                                    <b>CPF</b>: ".$res["cpf"]."
+                                                </div>
+                                                <div class='col-xs-3 icones'>
+                                                    <div class='pull-right'>
+                                                        ".($status ? " ":"<a href='#' onclick='excluir({$res['id']},{$this->eventoId},\"" .$res['nome']."\")'>
+                                                            <i class='fa fa-2x fa-close' data-toggle='tooltip' data-placement='top' title='Excluir participante'></i>
+                                                        </a>")."
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id='collapse".$res["id"]."' class='panel-collapse collapse'>
+                                            <div class='panel-body'>
+                                                <b>Palestras do participante:</b>
+                                                <ul class='list-group'>";
+                        $palestraRow = $this->modelPalestra->getPalestra("*","participante_has_palestra","WHERE participante_id = ".$res['id']." AND palestra_evento_id = ".$this->eventoId);
+                        while($palRow = mysql_fetch_array($palestraRow)){
+                            $infoPalestraRow = $this->modelPalestra->getPalestra("*","palestra","WHERE id = ".$palRow['palestra_id']);
+                            $infoPalestraRow = mysql_fetch_array($infoPalestraRow);
+                            $lista .=   "           <li class='list-group-item'>
+                                            ".$infoPalestraRow["nome"]."
+                                                        <div class='pull-right'>
+                                                            <span id='pt{$res['id']}' class='label label-".(($palRow["presenca"]==1) ? "success'>Presente" : "danger'>Ausente")."</span></td>
+                                                        </div>
+                                                    </li>";
+                        }
+                    $lista .=  "                </ul>
+                                            </div>
+                                        </div>
+                                    </div>";
+                }
+
+            }else{
+                $lista .=   "           <div class='panel panel-default'>
+                                            <div class='panel-body text-center'>
+                                                Nenhum participante cadastrado
+                                            </div>
+                                        </div>";
+            }
+            $lista .= "     </div>
+                            </form>
+                        </div>";
+            return $lista;
+        }
+
+        function verificaParticipantePresenca($id){
+            $row = $this->modelPalestra->getPalestra("*","participante_has_palestra","WHERE participante_id = ".$id." AND palestra_evento_id = ".$this->eventoId);
+            if(mysql_num_rows($row)>0){
+                $status = false;
+                while($res = mysql_fetch_array($row)){
+                    if($res["presenca"]==1){
+                        $status = true;
+                        break;
+                    }
+                }
+            }
+            return $status;
+        }
+
         function cadastrarPalestra(){
             if($this->modelPalestra->setPalestra($this->bean)){
                 $tipo = "success";
@@ -159,7 +262,7 @@
             $this->alert = $this->gerarAlert($tipo,$texto);
         }
 
-        function listarPalestras(){
+        function titlePalestra(){
             $row2 = $this->modelPalestra->getPalestra("*","evento","WHERE id = ".$this->eventoId);
             $nomeEvento = mysql_fetch_array($row2);
             $lista =   "<div class='row'>
@@ -168,7 +271,7 @@
                                 <div class='panel-heading'>
                                     <div class='row'>
                                         <div class='col-xs-8'>
-                                            Palestras ({$nomeEvento['nome']})
+                                            {$nomeEvento['nome']}
                                         </div>";
 
             if($_SERVER["SCRIPT_NAME"] == "/sisqrcode/view/palestra/listarPalestra.php"){
@@ -190,6 +293,8 @@
                     $lista .=           "<div class='col-xs-4'>
                                             <div class='row'>
                                                 <div class='col-xs-4'>
+                                                </div>
+                                                <div class='col-xs-4'>
                                                     <a href='".$_SESSION["palestra"]["view"]["cadastro"]."?id=".$this->eventoId."'>
                                                         <i class='fa fa-2x fa-plus-square' data-toggle='tooltip' data-placement='top' title='Adicionar palestras'></i>
                                                     </a>
@@ -199,20 +304,27 @@
                                                         <i class='fa fa-2x fa-group' data-toggle='tooltip' data-placement='top' title='Adicionar pessoas'></i>
                                                     </a>
                                                 </div>
-                                                <div class='col-xs-4'>
-                                                    <a href='".$_SESSION["participante"]["view"]["cadastro"]."?id=".$this->eventoId."&tipo=todos'>
-                                                        <i class='fa fa-2x fa-user' data-toggle='tooltip' data-placement='top' title='Adicionar participantes'></i>
-                                                    </a>
-                                                </div>
                                             </div>
                                         </div>";
                 }
             }
-
+// <div class='col-xs-4'>
+//                                                     <a href='".$_SESSION["participante"]["view"]["cadastro"]."?id=".$this->eventoId."&tipo=todos'>
+//                                                         <i class='fa fa-2x fa-user' data-toggle='tooltip' data-placement='top' title='Adicionar participantes'></i>
+//                                                     </a>
+//                                                 </div>
             $lista .=                "</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>";
+            return $lista;
+        }
+
+        function listarPalestras(){
+            $row2 = $this->modelPalestra->getPalestra("*","evento","WHERE id = ".$this->eventoId);
+            $nomeEvento = mysql_fetch_array($row2);
+            $lista =   "<div class='row'>";
 
             if($_SERVER["SCRIPT_NAME"] == "/sisqrcode/view/palestra/listarPalestra.php"){
                 $lista .= $this->alert;

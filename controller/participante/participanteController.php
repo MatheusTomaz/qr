@@ -138,7 +138,6 @@
                         <div class='row'>
                             <div class='col-xs-12'>
                                 <b>Selecione as palestras em que o participante será inscrito:</b><br>
-
                                 <div class='panel-group'>";
             $flag = true;
             if(mysql_num_rows($row) > 0 ){
